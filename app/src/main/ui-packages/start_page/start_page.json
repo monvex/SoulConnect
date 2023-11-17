@@ -5,7 +5,7 @@
     "type": "figma",
     "file": "TuQfnww3h2bxYEpnYTLD0J",
     "node": "52:2",
-    "version": "4579261617",
+    "version": "4593998449",
     "component-id": "ab5c44c48a5056dfe25cf93179e5c4a2d1479429"
   },
   "default": "Start page",
@@ -29,8 +29,16 @@
         "id": "Sign up"
       },
       {
-        "type": "group",
-        "id": "Logo"
+        "type": "text",
+        "id": "CONNECT"
+      },
+      {
+        "type": "text",
+        "id": "SOUL"
+      },
+      {
+        "type": "image",
+        "id": "logo1 1"
       },
       {
         "type": "text",
@@ -39,14 +47,6 @@
       {
         "type": "text",
         "id": "Sign up1"
-      },
-      {
-        "type": "image",
-        "id": "logo 1"
-      },
-      {
-        "type": "text",
-        "id": "SOUL CONNECT"
       }
     ],
     "modes": {
@@ -59,7 +59,9 @@
               "Background",
               "Log in",
               "Sign up",
-              "Logo"
+              "CONNECT",
+              "SOUL",
+              "logo1 1"
             ],
             "background-color": {
               "alpha": "1.0",
@@ -173,33 +175,81 @@
             "clip-content": "false"
           },
           {
-            "id": "Logo",
+            "id": "CONNECT",
             "alignment": {
               "horizontal": {
-                "attachment": "start",
-                "offset": "72.0"
+                "attachment": "center",
+                "offset": "0.0"
               },
               "vertical": {
                 "attachment": "start",
-                "offset": "100.0"
+                "offset": "255.0"
+              }
+            },
+            "font-weight": "700.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "1.0"
+            },
+            "text-content": "CONNECT",
+            "overflow": "visible",
+            "text-align-vertical": "center",
+            "text-size": "32.0",
+            "line-height": "1.1150000095367432",
+            "typeface": "Comfortaa"
+          },
+          {
+            "id": "SOUL",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "219.0"
+              }
+            },
+            "font-weight": "700.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "1.0"
+            },
+            "text-content": "SOUL",
+            "overflow": "visible",
+            "text-align-vertical": "center",
+            "text-size": "32.0",
+            "line-height": "1.1150000095367432",
+            "typeface": "Comfortaa"
+          },
+          {
+            "id": "logo1 1",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-1.1428565979003906"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "87.0"
               }
             },
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
-                "value": "215.3271026611328"
+                "value": "85.71428680419922"
               },
               "height-constraints": {
                 "sizing-mode": "fixed",
-                "value": "191.0"
+                "value": "120.0"
               }
             },
-            "is-structured": "false",
-            "children": [
-              "logo 1",
-              "SOUL CONNECT"
-            ],
-            "clip-content": "false"
+            "image-content": "logo1_1.png",
+            "scale": "cover"
           },
           {
             "id": "Log in1",
@@ -229,57 +279,6 @@
             "text-align": "left",
             "text-size": "20.0",
             "line-height": "1.1149999618530273",
-            "typeface": "Comfortaa"
-          },
-          {
-            "id": "logo 1",
-            "alignment": {
-              "horizontal": {
-                "attachment": "center",
-                "offset": "0.0"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "0.0"
-              }
-            },
-            "size-constraints": {
-              "width-constraints": {
-                "sizing-mode": "fixed",
-                "value": "215.3271026611328"
-              },
-              "height-constraints": {
-                "sizing-mode": "fixed",
-                "value": "120.0"
-              }
-            },
-            "image-content": "logo_1.png",
-            "scale": "fill"
-          },
-          {
-            "id": "SOUL CONNECT",
-            "alignment": {
-              "horizontal": {
-                "attachment": "center",
-                "offset": "0.33644866943359375"
-              },
-              "vertical": {
-                "attachment": "start",
-                "offset": "119.0"
-              }
-            },
-            "font-weight": "700.0",
-            "color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "1.0"
-            },
-            "text-content": "SOUL\nCONNECT",
-            "overflow": "visible",
-            "text-align-vertical": "center",
-            "text-size": "32.0",
-            "line-height": "1.1150000095367432",
             "typeface": "Comfortaa"
           }
         ]
