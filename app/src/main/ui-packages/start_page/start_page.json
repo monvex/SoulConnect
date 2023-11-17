@@ -5,7 +5,7 @@
     "type": "figma",
     "file": "TuQfnww3h2bxYEpnYTLD0J",
     "node": "52:2",
-    "version": "4579037709",
+    "version": "4579261617",
     "component-id": "ab5c44c48a5056dfe25cf93179e5c4a2d1479429"
   },
   "default": "Start page",
@@ -233,6 +233,16 @@
           },
           {
             "id": "logo 1",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "0.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "0.0"
+              }
+            },
             "size-constraints": {
               "width-constraints": {
                 "sizing-mode": "fixed",
@@ -250,8 +260,8 @@
             "id": "SOUL CONNECT",
             "alignment": {
               "horizontal": {
-                "attachment": "start",
-                "offset": "20.0"
+                "attachment": "center",
+                "offset": "0.33644866943359375"
               },
               "vertical": {
                 "attachment": "start",
