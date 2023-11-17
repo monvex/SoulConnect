@@ -1,0 +1,317 @@
+{
+  "name": "start_page",
+  "version": 32,
+  "source-key": {
+    "type": "figma",
+    "file": "TuQfnww3h2bxYEpnYTLD0J",
+    "node": "52:2",
+    "version": "4579037709",
+    "component-id": "ab5c44c48a5056dfe25cf93179e5c4a2d1479429"
+  },
+  "default": "Start page",
+  "design": {
+    "atoms": [
+      {
+        "type": "group",
+        "id": "top_level",
+        "root": "true"
+      },
+      {
+        "type": "image",
+        "id": "Background"
+      },
+      {
+        "type": "group",
+        "id": "Log in"
+      },
+      {
+        "type": "group",
+        "id": "Sign up"
+      },
+      {
+        "type": "group",
+        "id": "Logo"
+      },
+      {
+        "type": "text",
+        "id": "Log in1"
+      },
+      {
+        "type": "text",
+        "id": "Sign up1"
+      },
+      {
+        "type": "image",
+        "id": "logo 1"
+      },
+      {
+        "type": "text",
+        "id": "SOUL CONNECT"
+      }
+    ],
+    "modes": {
+      "Start page": {
+        "rules": [
+          {
+            "id": "top_level",
+            "is-structured": "false",
+            "children": [
+              "Background",
+              "Log in",
+              "Sign up",
+              "Logo"
+            ],
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            }
+          },
+          {
+            "id": "Background",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "1680.0"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "1108.0"
+              }
+            },
+            "image-content": "background.png",
+            "scale": "cover"
+          },
+          {
+            "id": "Log in",
+            "padding": {
+              "left": "67.0",
+              "top": "9.0",
+              "right": "67.0",
+              "bottom": "9.0"
+            },
+            "border-radius": "100.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-0.5"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "331.0"
+              }
+            },
+            "tap-handler": "$on Log in tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "stroke-width": "1.0",
+            "stroke-color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.9607843137254902"
+            },
+            "arrangement": "row",
+            "children": [
+              "Log in1"
+            ],
+            "item-spacing": "10.0",
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.8509803921568627"
+            },
+            "clip-content": "false"
+          },
+          {
+            "id": "Sign up",
+            "padding": {
+              "left": "19.0",
+              "top": "9.0",
+              "right": "19.0",
+              "bottom": "9.0"
+            },
+            "border-radius": "100.0",
+            "alignment": {
+              "horizontal": {
+                "attachment": "center",
+                "offset": "-0.5"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "400.0"
+              }
+            },
+            "tap-handler": "$on Sign up tapped",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "shrink"
+              },
+              "height-constraints": {
+                "sizing-mode": "shrink"
+              }
+            },
+            "arrangement": "row",
+            "children": [
+              "Sign up1"
+            ],
+            "item-spacing": "10.0",
+            "background-color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.8509803921568627"
+            },
+            "clip-content": "false"
+          },
+          {
+            "id": "Logo",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "72.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "100.0"
+              }
+            },
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "215.3271026611328"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "191.0"
+              }
+            },
+            "is-structured": "false",
+            "children": [
+              "logo 1",
+              "SOUL CONNECT"
+            ],
+            "clip-content": "false"
+          },
+          {
+            "id": "Log in1",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "$Log in text ",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "20.0",
+            "line-height": "1.1149999618530273",
+            "typeface": "Comfortaa"
+          },
+          {
+            "id": "Sign up1",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "0.0"
+            },
+            "text-content": "$Sign up text ",
+            "overflow": "visible",
+            "text-align": "left",
+            "text-size": "20.0",
+            "line-height": "1.1149999618530273",
+            "typeface": "Comfortaa"
+          },
+          {
+            "id": "logo 1",
+            "size-constraints": {
+              "width-constraints": {
+                "sizing-mode": "fixed",
+                "value": "215.3271026611328"
+              },
+              "height-constraints": {
+                "sizing-mode": "fixed",
+                "value": "120.0"
+              }
+            },
+            "image-content": "logo_1.png",
+            "scale": "fill"
+          },
+          {
+            "id": "SOUL CONNECT",
+            "alignment": {
+              "horizontal": {
+                "attachment": "start",
+                "offset": "20.0"
+              },
+              "vertical": {
+                "attachment": "start",
+                "offset": "119.0"
+              }
+            },
+            "font-weight": "700.0",
+            "color": {
+              "alpha": "1.0",
+              "hue": "0.0",
+              "saturation": "0.0",
+              "value": "1.0"
+            },
+            "text-content": "SOUL\nCONNECT",
+            "overflow": "visible",
+            "text-align-vertical": "center",
+            "text-size": "32.0",
+            "line-height": "1.1150000095367432",
+            "typeface": "Comfortaa"
+          }
+        ]
+      }
+    }
+  },
+  "parameters": {
+    "on Log in tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "on Sign up tapped": {
+      "data-type": "void-callback",
+      "required": false,
+      "description": ""
+    },
+    "Log in text ": {
+      "data-type": "text",
+      "required": false,
+      "description": ""
+    },
+    "Sign up text ": {
+      "data-type": "text",
+      "required": false,
+      "description": ""
+    }
+  },
+  "previews": [
+    {
+      "design": "Start page",
+      "size": {
+        "width": 360.0,
+        "height": 800.0
+      },
+      "parameters": {
+        "Log in text ": "Вход",
+        "Sign up text ": "Регистрация"
+      }
+    }
+  ],
+  "adin-component-search-paths": [],
+  "image-search-paths": [],
+  "vector-search-paths": []
+}
