@@ -45,7 +45,8 @@ fun BottomNavigation(
                     )
                 },
                 selectedContentColor = Color.Black,
-                unselectedContentColor = Color.Gray
+                unselectedContentColor = Color.Gray,
+                interactionSource = NoRippleInteractSource()
 
             )
         }
