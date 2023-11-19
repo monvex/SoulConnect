@@ -1,5 +1,6 @@
 package com.example.soulconnect
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -18,7 +19,15 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     StartPage(
                         logInText = "Вход",
-                        signUpText = "Регистрация"
+                        signUpText = "Регистрация",
+                        onLogInTapped = {
+                            val navigate = Intent(this@MainActivity, MainMenuActivity::class.java)
+                            startActivity(navigate)
+                        },
+                        onSignUpTapped = {
+                            val navigate = Intent(this@MainActivity, MainMenuActivity::class.java)
+                            startActivity(navigate)
+                        }
                         )
                 }
             }
