@@ -1,4 +1,4 @@
-package com.example.soulconnect.bottom_navigation
+package com.example.soulconnect.navigation
 
 import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource

@@ -1,4 +1,4 @@
-package com.example.soulconnect.bottom_navigation
+package com.example.soulconnect.navigation
 
 import com.example.soulconnect.R
 

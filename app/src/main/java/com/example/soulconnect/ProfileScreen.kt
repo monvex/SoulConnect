@@ -3,8 +3,11 @@ package com.example.soulconnect
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -12,14 +15,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FilterChip
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,10 +37,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.soulconnect.navigation.ProfileItem
 import com.example.soulconnect.text_functions.AutoResizedText
 
+@OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(navController: NavController) {
     val focusManager = LocalFocusManager.current
     // Основной контейнер
     Column(modifier = Modifier
@@ -65,7 +71,7 @@ fun ProfileScreen() {
         ) {
             // Тут добавить кнопку для редактирования. Добавлять после Image
             Row() {
-                var imageId = remember {
+                val imageId = remember {
                     mutableStateOf(R.drawable.test_profile_pic)         // Заменить на фотографию из БД
                 }
                 Image(
@@ -78,7 +84,7 @@ fun ProfileScreen() {
                         .aspectRatio(1f)
                         .clip(CircleShape)
                         .clickable {
-                            //Добавить переход на просмотр всех фотографий
+                            navController.navigate(ProfileItem.Photos.route)
                         }
                 )
             }
@@ -91,10 +97,10 @@ fun ProfileScreen() {
                 .fillMaxHeight(0.05f),
             contentAlignment = Alignment.Center
         ) {
-            var name = remember {
+            val name = remember {
                 mutableStateOf("SomeName")       // Заменить на данные из БД
             }
-            var age = remember {
+            val age = remember {
                 mutableStateOf(20.toString())       // Заменить на данные из бд
             }
             var text = "${name.value}, ${age.value}"
@@ -108,11 +114,11 @@ fun ProfileScreen() {
                 .fillMaxHeight(0.05f),
             contentAlignment = Alignment.Center
         ) {
-            var city = remember {
+            val city = remember {
                 mutableStateOf("SomeCity")      // Заменить на данные из БД
             }
             AutoResizedText(text = city.value,
-                style = TextStyle(fontSize = 20.sp)
+                style = TextStyle(fontSize = 20.sp)     // Заменить на данные из БД
             )
         }
         // Контейнер с текстовым описанием пользователя, которое можно редактировать
@@ -127,16 +133,14 @@ fun ProfileScreen() {
                 mutableStateOf("Подниму тебя на бицепс и не только ;)")       // Заменить на данные из БД
             }
             val maxCharsInDescription = 180
-            var shouldDraw = remember {
+            val shouldDraw = remember {
                 mutableStateOf(true)
             }
             OutlinedTextField(
                 value = profileDescription.value,
                 onValueChange = {
                                 // Добавить загрузку введенных данных в БД
-                    if(profileDescription.value.length == maxCharsInDescription)
-                        profileDescription.value = maxCharsInDescription.toString()
-                    else
+                    if(profileDescription.value.length < maxCharsInDescription)
                         profileDescription.value = it
                 },
                 colors = OutlinedTextFieldDefaults.colors(
@@ -146,10 +150,12 @@ fun ProfileScreen() {
                 supportingText = {
                                  Text(
                                      text = "${profileDescription.value.length} / $maxCharsInDescription",
-                                     modifier = Modifier.fillMaxWidth().drawWithContent {
-                                         if (shouldDraw.value)
-                                             drawContent()
-                                     },
+                                     modifier = Modifier
+                                         .fillMaxWidth()
+                                         .drawWithContent {
+                                             if (shouldDraw.value)
+                                                 drawContent()
+                                         },
                                      textAlign = TextAlign.End,
                                  )
                 },
@@ -157,9 +163,33 @@ fun ProfileScreen() {
                     .fillMaxSize()
                     .onFocusChanged {
                         shouldDraw.value = !shouldDraw.value
+                        // Добавить загрузку в БД
                     }
 
             )
+        }
+        val chipsInRow = listOf(
+            "biba",
+            "boba",
+            "dva",
+            "dolboeba"
+        )
+        // Контейнер с тэгами пользователя
+        val selected = remember {
+            mutableStateOf(false)
+        }
+        FlowRow(
+            modifier = Modifier
+                .fillMaxSize(),
+            maxItemsInEachRow = 3,
+            horizontalArrangement = Arrangement.Start
+        ) {
+            chipsInRow.forEach {
+                FilterChip(selected = selected.value, onClick = {selected.value = !selected.value},
+                    ) {
+                    Text(text = it)
+                }
+            }
         }
 
     }
