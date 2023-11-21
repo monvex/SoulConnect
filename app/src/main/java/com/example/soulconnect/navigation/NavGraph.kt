@@ -2,9 +2,12 @@ package com.example.soulconnect.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.soulconnect.ChatsScreen
+import com.example.soulconnect.FullScreenPhoto
 import com.example.soulconnect.GroupChatsScreen
 import com.example.soulconnect.PhotosScreen
 import com.example.soulconnect.ProfileScreen
@@ -27,9 +30,32 @@ fun NavGraph(
         composable(BottomItem.Profile.route) {
             ProfileScreen(navHostController)
         }
-        composable(ProfileItem.Photos.route) {
-
-            PhotosScreen(navHostController)
+        // Перенос аргументов в
+        composable(
+            route = ProfileItem.Photos.route,
+            arguments = listOf(
+                navArgument(name = IMAGE_ID) {
+                    type = NavType.IntType
+                }
+            )
+            ) { navBackStackEntry ->
+            val imageId = navBackStackEntry.arguments?.getInt(IMAGE_ID)
+            PhotosScreen(navController = navHostController, mainImageId = imageId)
+        }
+        composable(
+            route = ProfileItem.FullScreenPhoto.route,
+            arguments = listOf(
+                navArgument(name = IMAGE_ID) {
+                    type = NavType.IntType
+                },
+                navArgument(name = MAIN_IMAGE_ID) {
+                    type = NavType.IntType
+                }
+            )
+        ) { navBackStackEntry ->
+            val imageId = navBackStackEntry.arguments?.getInt(IMAGE_ID)
+            val mainImageId = navBackStackEntry.arguments?.getInt(MAIN_IMAGE_ID)
+            FullScreenPhoto(navController = navHostController, imageId = imageId, mainImageId)
         }
     }
 }

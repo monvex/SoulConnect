@@ -1,6 +1,5 @@
 package com.example.soulconnect
 
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -15,18 +14,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FilterChip
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -39,7 +32,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
@@ -103,7 +95,7 @@ fun ProfileScreen(navController: NavController) {
                                 .aspectRatio(1f)
                                 .clip(CircleShape)
                                 .clickable {
-                                    navController.navigate(ProfileItem.Photos.route)
+                                    navController.navigate(ProfileItem.Photos.getFullRoute(imageId.value))
                                 }
                         )
                     }
@@ -191,11 +183,12 @@ fun ProfileScreen(navController: NavController) {
 
                     )
                 }
-                val chipsInRow = listOf(
-                    "biba",
-                    "boba",
-                    "dva",
-                    "dolboeba"
+                val chipsInRow = listOf(            // TODO Заменить на данные из БД
+                    "Спорт",
+                    "Саморазвитие",
+                    "Фильмы",
+                    "IT",
+                    "Автомобили"
                 )
                 // Контейнер с кнопкой редактирования тэгов
                 Row (
@@ -214,9 +207,9 @@ fun ProfileScreen(navController: NavController) {
                 }
                 FlowRow(
                     modifier = Modifier
-                        .fillMaxSize(),
-                    maxItemsInEachRow = 3,
-                    horizontalArrangement = Arrangement.Start
+                        .fillMaxSize()
+                        .padding(start = 10.dp, end = 10.dp),
+                    horizontalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
                     chipsInRow.forEach {
                         FilterChip(selected = selected.value, onClick = {selected.value = !selected.value},
