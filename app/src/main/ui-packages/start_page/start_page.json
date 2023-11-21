@@ -5,7 +5,7 @@
     "type": "figma",
     "file": "TuQfnww3h2bxYEpnYTLD0J",
     "node": "52:2",
-    "version": "4593998449",
+    "version": "4639916305",
     "component-id": "ab5c44c48a5056dfe25cf93179e5c4a2d1479429"
   },
   "default": "Start page",
@@ -38,7 +38,7 @@
       },
       {
         "type": "image",
-        "id": "logo1 1"
+        "id": "logo"
       },
       {
         "type": "text",
@@ -61,7 +61,7 @@
               "Sign up",
               "CONNECT",
               "SOUL",
-              "logo1 1"
+              "logo"
             ],
             "background-color": {
               "alpha": "1.0",
@@ -82,7 +82,7 @@
                 "value": "1108.0"
               }
             },
-            "image-content": "background.png",
+            "image-content": "background.jpeg",
             "scale": "cover"
           },
           {
@@ -94,6 +94,19 @@
               "bottom": "9.0"
             },
             "border-radius": "100.0",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.0",
+              "offset-x": "0.0",
+              "offset-y": "4.0",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
             "alignment": {
               "horizontal": {
                 "attachment": "center",
@@ -113,13 +126,6 @@
                 "sizing-mode": "shrink"
               }
             },
-            "stroke-width": "1.0",
-            "stroke-color": {
-              "alpha": "1.0",
-              "hue": "0.0",
-              "saturation": "0.0",
-              "value": "0.9607843137254902"
-            },
             "arrangement": "row",
             "children": [
               "Log in1"
@@ -129,7 +135,7 @@
               "alpha": "1.0",
               "hue": "0.0",
               "saturation": "0.0",
-              "value": "0.8509803921568627"
+              "value": "1.0"
             },
             "clip-content": "false"
           },
@@ -142,6 +148,19 @@
               "bottom": "9.0"
             },
             "border-radius": "100.0",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.0",
+              "offset-x": "0.0",
+              "offset-y": "4.0",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
             "alignment": {
               "horizontal": {
                 "attachment": "center",
@@ -170,12 +189,25 @@
               "alpha": "1.0",
               "hue": "0.0",
               "saturation": "0.0",
-              "value": "0.8509803921568627"
+              "value": "1.0"
             },
             "clip-content": "false"
           },
           {
             "id": "CONNECT",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.0",
+              "offset-x": "0.0",
+              "offset-y": "4.0",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
             "alignment": {
               "horizontal": {
                 "attachment": "center",
@@ -202,6 +234,19 @@
           },
           {
             "id": "SOUL",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.0",
+              "offset-x": "0.0",
+              "offset-y": "4.0",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
             "alignment": {
               "horizontal": {
                 "attachment": "center",
@@ -227,11 +272,24 @@
             "typeface": "Comfortaa"
           },
           {
-            "id": "logo1 1",
+            "id": "logo",
+            "drop-shadow": {
+              "color": {
+                "alpha": "0.24705882352941178",
+                "hue": "0.0",
+                "saturation": "0.0",
+                "value": "0.0"
+              },
+              "blur": "4.0",
+              "offset-x": "0.0",
+              "offset-y": "4.0",
+              "spread": "0.0",
+              "blend-mode": "normal"
+            },
             "alignment": {
               "horizontal": {
                 "attachment": "center",
-                "offset": "-1.1428565979003906"
+                "offset": "-5.142856597900391"
               },
               "vertical": {
                 "attachment": "start",
@@ -248,7 +306,7 @@
                 "value": "120.0"
               }
             },
-            "image-content": "logo1_1.png",
+            "image-content": "logo.png",
             "scale": "cover"
           },
           {
@@ -259,7 +317,7 @@
               "saturation": "0.0",
               "value": "0.0"
             },
-            "text-content": "$Log in text ",
+            "text-content": "Вход",
             "overflow": "visible",
             "text-align": "left",
             "text-size": "20.0",
@@ -274,7 +332,7 @@
               "saturation": "0.0",
               "value": "0.0"
             },
-            "text-content": "$Sign up text ",
+            "text-content": "Регистрация",
             "overflow": "visible",
             "text-align": "left",
             "text-size": "20.0",
@@ -295,16 +353,6 @@
       "data-type": "void-callback",
       "required": false,
       "description": ""
-    },
-    "Log in text ": {
-      "data-type": "text",
-      "required": false,
-      "description": ""
-    },
-    "Sign up text ": {
-      "data-type": "text",
-      "required": false,
-      "description": ""
     }
   },
   "previews": [
@@ -313,10 +361,6 @@
       "size": {
         "width": 360.0,
         "height": 800.0
-      },
-      "parameters": {
-        "Log in text ": "Вход",
-        "Sign up text ": "Регистрация"
       }
     }
   ],
