@@ -12,6 +12,7 @@ import com.example.soulconnect.GroupChatsScreen
 import com.example.soulconnect.PhotosScreen
 import com.example.soulconnect.ProfileScreen
 import com.example.soulconnect.SearchScreen
+import com.example.soulconnect.TagScreen
 
 @Composable
 fun NavGraph(
@@ -57,5 +58,17 @@ fun NavGraph(
             val mainImageId = navBackStackEntry.arguments?.getInt(MAIN_IMAGE_ID)
             FullScreenPhoto(navController = navHostController, imageId = imageId, mainImageId)
         }
+        composable(
+            route = ProfileItem.Tags.route,
+            arguments = listOf(
+                navArgument(name = TAG_LIST){
+                    type = NavType.StringArrayType
+                }
+            )
+        ){navBackStackEntry ->
+            val tagList = navBackStackEntry.arguments?.getStringArrayList(TAG_LIST)
+            TagScreen(navHostController, tagList)
+        }
+
     }
 }

@@ -196,7 +196,7 @@ fun ProfileScreen(navController: NavController) {
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ){
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { navController.navigate(ProfileItem.Tags.getFullRoute(chipsInRow))}) {
                         androidx.compose.material3.Icon(imageVector = Icons.Outlined.Info, contentDescription = "someshit")
                     }
                 }
