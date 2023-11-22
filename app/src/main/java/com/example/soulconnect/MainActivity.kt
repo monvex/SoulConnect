@@ -18,8 +18,6 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier
                 ) {
                     StartPage(
-                        logInText = "Вход",
-                        signUpText = "Регистрация",
                         onLogInTapped = {
                             val navigate = Intent(this@MainActivity, MainMenuActivity::class.java)
                             startActivity(navigate)
