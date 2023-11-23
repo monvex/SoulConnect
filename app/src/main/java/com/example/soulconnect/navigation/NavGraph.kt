@@ -16,6 +16,7 @@ import androidx.navigation.navigation
 import com.example.soulconnect.ChatsScreen
 import com.example.soulconnect.FullScreenPhoto
 import com.example.soulconnect.GroupChatsScreen
+import com.example.soulconnect.LogInScreen
 import com.example.soulconnect.PhotosScreen
 import com.example.soulconnect.ProfileScreen
 import com.example.soulconnect.ProfileViewModel
@@ -34,7 +35,7 @@ fun NavGraph(
             ChatsScreen(navHostController)
         }
         composable(BottomItem.GroupChats.route) {
-            GroupChatsScreen(navHostController)
+            LogInScreen(onNavigate = {})
         }
         navigation(
             startDestination = "toProfile",
