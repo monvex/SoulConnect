@@ -20,9 +20,28 @@ fun ChatsScreen(navController: NavController) {
         contentScale = ContentScale.Crop,
         modifier = Modifier.fillMaxSize()
     )
+    val names = listOf(
+        "Дима",
+        "Руслан",
+        "Артем",
+        "Леонид"
+    )
+    var pics = listOf(
+        R.drawable.test_pic_4,
+        R.drawable.test_pic_1,
+        R.drawable.test_pic_2,
+        R.drawable.test_pic_3
+    )
+    var text = listOf(
+        "Го дрифтить",
+        "Че по матеше?",
+        "Скинешь лабу?",
+        "Hey"
+    )
+
     Column() {
-        Chat()
-        Chat()
-        Chat()
+        for(i in 0..3) {
+            Chat(picId = pics[i], name = names[i], text = text[i])
+        }
     }
 }

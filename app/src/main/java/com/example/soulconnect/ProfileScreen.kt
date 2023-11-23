@@ -46,7 +46,7 @@ import com.example.soulconnect.text_functions.AutoResizedText
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun ProfileScreen(navController: NavController, onNavigate: () -> Unit, tags: List<String>) {
+fun ProfileScreen(navController: NavController, onNavigateToTagsScreen: () -> Unit,onNavigate: () -> Unit) {
 
     val focusManager = LocalFocusManager.current
     // Основной контейнер
@@ -74,6 +74,7 @@ fun ProfileScreen(navController: NavController, onNavigate: () -> Unit, tags: Li
                         .fillMaxWidth()
                 ){
                 }
+
                 // Контейнер с главной фотографией профиля
                 Box (
                     modifier = Modifier
@@ -96,12 +97,13 @@ fun ProfileScreen(navController: NavController, onNavigate: () -> Unit, tags: Li
                                 .aspectRatio(1f)
                                 .clip(CircleShape)
                                 .clickable {
-                                    navController.navigate(ProfileItem.Photos.getFullRoute(imageId.value))
+                                    onNavigate()
                                 }
                         )
                     }
 
                 }
+
                 // Контейнер с именем и возрастом пользователя
                 Box(
                     modifier = Modifier
@@ -195,7 +197,7 @@ fun ProfileScreen(navController: NavController, onNavigate: () -> Unit, tags: Li
                     horizontalArrangement = Arrangement.End
                 ){
 
-                    IconButton(onClick = onNavigate) {
+                    IconButton(onClick = onNavigateToTagsScreen) {
                         androidx.compose.material3.Icon(imageVector = Icons.Outlined.Info, contentDescription = "someshit")
                     }
                 }
@@ -220,3 +222,4 @@ fun ProfileScreen(navController: NavController, onNavigate: () -> Unit, tags: Li
             }
         }
     }
+
