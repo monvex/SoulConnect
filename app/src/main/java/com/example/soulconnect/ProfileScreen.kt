@@ -46,7 +46,8 @@ import com.example.soulconnect.text_functions.AutoResizedText
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen(navController: NavController, onNavigate: () -> Unit, tags: List<String>) {
+
     val focusManager = LocalFocusManager.current
     // Основной контейнер
         Box(modifier = Modifier.fillMaxSize()) {
@@ -193,7 +194,8 @@ fun ProfileScreen(navController: NavController) {
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ){
-                    IconButton(onClick = { navController.navigate(ProfileItem.Tags.getFullRoute(chipsInRow))}) {
+
+                    IconButton(onClick = onNavigate) {
                         androidx.compose.material3.Icon(imageVector = Icons.Outlined.Info, contentDescription = "someshit")
                     }
                 }

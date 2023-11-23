@@ -14,8 +14,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FilterChip
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -32,7 +30,7 @@ import androidx.navigation.NavController
 @Composable
 fun TagScreen(
     navController: NavController,
-    userTagList: List<String>?
+    tagList: List<String>
 ){
     val tagsList = mapOf<String, List<String>>(
         "Творчество" to listOf<String>("Фотография", "Видеосъемка", "Дизайн", "Макияж", "Рукоделие", "Пение", "Танцы", "Музыка", "Блог", "Рисование"),
@@ -68,10 +66,21 @@ fun TagScreen(
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 for (tag in value) {
-                    var selectedTag = remember{mutableStateOf(userTagList?.contains(tag) ?: false)}
-                    FilterChip(selected = selectedTag.value, onClick = {selectedTag.value = !selectedTag.value}) {
+                    FilterChip(selected = false, onClick = {}) {
                         Text(text = "$tag")
                     }
+                }
+            }
+
+        }
+        FlowRow(
+            modifier = Modifier
+                .padding(start = 10.dp, end = 10.dp),
+            horizontalArrangement = Arrangement.spacedBy(5.dp)
+        ) {
+            for (tag in tagList) {
+                FilterChip(selected = false, onClick = {}) {
+                    Text(text = "$tag")
                 }
             }
         }

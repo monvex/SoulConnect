@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 @Composable
 fun BottomNavigation(
@@ -32,7 +33,16 @@ fun BottomNavigation(
         listItems.forEach {item->
             BottomNavigationItem(
                 selected = currentRoute == item.route,
-                onClick = { navController.navigate(item.route) },
+                onClick = { navController.navigate(item.route) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    // Avoid multiple copies of the same destination when
+                    // reselecting the same item
+                    launchSingleTop = true
+                    // Restore state when reselecting a previously selected item
+                    restoreState = true
+                } },
                 icon = {
                     Icon(
                         painter = painterResource(id = item.iconId),

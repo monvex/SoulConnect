@@ -8,4 +8,5 @@ sealed class BottomItem(var title: String, var iconId: Int, var route: String) {
     object GroupChats : BottomItem("Групповые\nЧаты", R.drawable.ic_groupchats, "group_chats")
     object Profile : BottomItem("Профиль", R.drawable.ic_profile, "profile")
 
+
 }
