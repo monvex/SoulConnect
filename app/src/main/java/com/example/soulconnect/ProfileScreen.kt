@@ -184,11 +184,8 @@ fun ProfileScreen(navController: NavController) {
                     )
                 }
                 val chipsInRow = listOf(            // TODO Заменить на данные из БД
-                    "Спорт",
-                    "Саморазвитие",
-                    "Фильмы",
-                    "IT",
-                    "Автомобили"
+                    "Дизайн",
+                    "Велосипед"
                 )
                 // Контейнер с кнопкой редактирования тэгов
                 Row (
