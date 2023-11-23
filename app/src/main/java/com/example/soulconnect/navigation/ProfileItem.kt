@@ -10,7 +10,7 @@ sealed class ProfileItem(var title: String, var route: String) {
             return "photos" + "/$imageId"
         }
     }
-    object Tags : ProfileItem("Тэги", "tags" + "/{$TAG_LIST}"){
+    object Tags : ProfileItem("Тэги", "tags"){
         fun getFullRoute(tagList: List<String>?): String{
             return "tags" + "/$tagList"
         }
