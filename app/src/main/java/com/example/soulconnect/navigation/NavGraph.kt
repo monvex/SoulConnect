@@ -37,11 +37,13 @@ fun NavGraph(
         composable(BottomItem.GroupChats.route) {
             LogInScreen(onNavigate = {})
         }
+        composable("toLogIn"){
+            LogInScreen(onNavigate = {})
+        }
         profileGraph(navHostController)
     }
 
 }
-
 
 @Composable
 inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(

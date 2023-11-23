@@ -4,16 +4,28 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -54,13 +66,14 @@ fun LogInScreen(onNavigate: () -> Unit)
             )
         )
         EntryBlock(
-            modifier = Modifier.boxAlign(
+            modifier = Modifier
+                .boxAlign(
                 alignment = Alignment.TopCenter,
                 offset = DpOffset(
                     x = -0.5.dp,
                     y = 460.0.dp
+                    )
                 )
-            )
         ) {
             Entry()
         }
@@ -91,18 +104,55 @@ fun Logo(modifier: Modifier = Modifier) {
 
 @Composable
 fun UserInput(modifier: Modifier = Modifier){
-    var loginText = ""
-    var passwordText = ""
+    var loginText by remember { mutableStateOf("") }
+    var passwordText by remember { mutableStateOf("") }
     Column(modifier = modifier){
-        Text(text = "Логин:")
-        TextField(
-            value = loginText,
-            onValueChange = {loginText = it}
+        Text(
+            text = "Логин:",
+            fontFamily = FontFamily(
+                Font(
+                    R.font.relay_comfortaa_regular,
+                    weight = FontWeight.W400,
+                    style = FontStyle.Normal
+                )
+            ),
+            fontSize = 18.sp,
+            color = Color.White,
+            fontWeight = FontWeight.Bold
         )
-        Text(text = "Пароль:")
-        TextField(
+        OutlinedTextField(
+            value = loginText,
+            onValueChange = {loginText = it},
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(0.7f),
+            textStyle = TextStyle(
+                color = Color.White,
+                fontSize = 18.sp,
+            )
+        )
+        Text(
+            text = "Пароль:",
+            fontFamily = FontFamily(
+                Font(
+                    R.font.relay_comfortaa_regular,
+                    weight = FontWeight.W400,
+                    style = FontStyle.Normal
+                )
+            ),
+            fontSize = 18.sp,
+            color = Color.White,
+            fontWeight = FontWeight.Bold
+        )
+        OutlinedTextField(
             value = passwordText,
-            onValueChange = {passwordText = it}
+            onValueChange = {passwordText = it},
+            visualTransformation = PasswordVisualTransformation(),
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth(0.7f),
+            textStyle = TextStyle(
+                color = Color.White,
+                fontSize = 18.sp,
+            )
         )
     }
 }
