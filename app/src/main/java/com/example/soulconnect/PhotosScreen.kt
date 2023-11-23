@@ -27,28 +27,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.soulconnect.navigation.ProfileItem
+import com.example.soulconnect.navigation.ProfileViewModel
 
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PhotosScreen(
     navController: NavController,
-    mainImageId: Int?,
+    mainImageId: Int,
+    userPhotos: List<Int>,
+    onNavigate: () -> Unit,
     photosClickable: Boolean = true
 ) {
-    var photosIds = listOf(         // TODO: заменить на фотографии из БД
-        R.drawable.test_pic_1,
-        R.drawable.test_pic_2,
-        R.drawable.test_pic_3,
-        R.drawable.test_pic_4,
-        R.drawable.test_pic_4,
-        R.drawable.test_pic_4,
-        R.drawable.test_pic_4,
-        R.drawable.test_pic_4,
-
-    )
+    var viewModel = viewModel { ProfileViewModel() }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -68,33 +62,28 @@ fun PhotosScreen(
             // TODO добавить код при незагрузившейся картинке
             // else
         }
-        LazyColumn() {
-
-        }
         FlowRow(
             maxItemsInEachRow = 3, modifier = Modifier
                 .fillMaxWidth(),
             ) {
-            photosIds.forEach {
+            userPhotos.forEach {
                 Image(painter = painterResource(id = it), contentDescription = "photoId$it", contentScale = ContentScale.Crop, modifier = Modifier
                     .fillMaxWidth(0.33f)
                     .aspectRatio(1f)
                     .border(2.dp, color = Color.White)
-                    .clickable(enabled = photosClickable) { navController.navigate(ProfileItem.FullScreenPhoto.getFullRoute(it, mainImageId)) }         // TODO: фотка во весь экран с кнопкой назад
+                    .clickable(enabled = photosClickable) {
+                        viewModel.updateChosenPhoto(it)
+                        onNavigate
+                    }         // TODO: фотка во весь экран с кнопкой назад
                 )
             }
-        }
-        Button(
-            onClick = {}
-        ) {
-            Text(text = "Click")
         }
     }
 }
 
 @Composable
-fun FullScreenPhoto(navController: NavController, imageId: Int?, mainImageId: Int?) {
-    PhotosScreen(navController = navController, mainImageId = mainImageId, photosClickable = false)
+fun FullScreenPhoto(navController: NavController, imageId: Int, mainImageId: Int, userPhotos: List<Int>) {
+    PhotosScreen(navController = navController, mainImageId = mainImageId, photosClickable = false, userPhotos = userPhotos, onNavigate = {})
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
