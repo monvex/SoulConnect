@@ -71,9 +71,10 @@ fun LogInScreen(onNavigate: () -> Unit)
                 alignment = Alignment.TopCenter,
                 offset = DpOffset(
                     x = -0.5.dp,
-                    y = 460.0.dp
+                    y = 470.0.dp
                     )
                 )
+                .fillMaxWidth(0.5f)
         ) {
             Entry()
         }
