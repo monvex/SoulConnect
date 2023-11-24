@@ -24,6 +24,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -41,14 +42,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import com.example.soulconnect.navigation.ProfileItem
 import com.example.soulconnect.navigation.ProfileViewModel
 import com.example.soulconnect.text_functions.AutoResizedText
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun ProfileScreen(navController: NavController, onNavigateToTagsScreen: () -> Unit,onNavigate: () -> Unit) {
+fun ProfileScreen(onNavigateToTagsScreen: () -> Unit,onNavigate: () -> Unit) {
     val viewModel = viewModel { ProfileViewModel() }
     val focusManager = LocalFocusManager.current
     // Основной контейнер
@@ -119,7 +118,7 @@ fun ProfileScreen(navController: NavController, onNavigateToTagsScreen: () -> Un
                     val age = remember {
                         mutableStateOf(20.toString())       // Заменить на данные из бд
                     }
-                    var text = "${name.value}, ${age.value}"
+                    val text = "${name.value}, ${age.value}"
                     AutoResizedText(text = text,
                         style = TextStyle(fontSize = 20.sp, color = Color.White))
                 }
@@ -188,11 +187,13 @@ fun ProfileScreen(navController: NavController, onNavigateToTagsScreen: () -> Un
 
                     )
                 }
-                val chipsInRow = listOf(            // TODO Заменить на данные из БД
-                    "Дизайн",
-                    "Велосипед"
+                val list = listOf(
+                    "Музыка",
+                    "Фитнес",
+                    "Бег"
                 )
-                val listOfUserTags = viewModel.userTagList
+                viewModel.updateUserTagList(list)
+                val state = viewModel.userTagList.collectAsState()
                 // Контейнер с кнопкой редактирования тэгов
                 Row (
                     modifier = Modifier
@@ -215,7 +216,7 @@ fun ProfileScreen(navController: NavController, onNavigateToTagsScreen: () -> Un
                         .padding(start = 10.dp, end = 10.dp),
                     horizontalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
-                    chipsInRow.forEach {
+                    state.value.forEach {
                         FilterChip(selected = selected.value, onClick = {selected.value = !selected.value},
                         ) {
                             Text(text = it)

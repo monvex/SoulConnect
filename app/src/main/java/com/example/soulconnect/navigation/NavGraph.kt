@@ -9,14 +9,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.soulconnect.ChatsScreen
 import com.example.soulconnect.FullScreenPhoto
-import com.example.soulconnect.GroupChatsScreen
 import com.example.soulconnect.LogInScreen
 import com.example.soulconnect.PhotosScreen
 import com.example.soulconnect.ProfileScreen
@@ -40,10 +37,12 @@ fun NavGraph(
             )
         }
         composable(BottomItem.Search.route) {
-            SearchScreen(navHostController)
+            SearchScreen()
         }
         composable(BottomItem.Chats.route) {
-            ChatsScreen(navHostController)
+            ChatsScreen(onNavigate = {      /* TODO: перенаправление в нужный чат */
+
+            })
         }
         composable(BottomItem.GroupChats.route) {
             LogInScreen(onNavigate = {})
@@ -75,19 +74,8 @@ fun NavGraphBuilder.profileGraph(navHostController: NavHostController) {
     ) {
         composable(BottomItem.Profile.route) {entry ->
             val viewModel = entry.sharedViewModel<ProfileViewModel>(navHostController)
-            val state by viewModel.userTagList.collectAsStateWithLifecycle()
             ProfileScreen(
-                navHostController,
                 onNavigateToTagsScreen = {
-                    viewModel.updateUserTagList(
-                        listOf(             //TODO: переписать под получение списка из БД
-                            "Спорт",
-                            "Саморазвитие",
-                            "Фильмы",
-                            "IT",
-                            "Автомобили"
-                        )
-                    )
                     navHostController.navigate(ProfileItem.Tags.route)
                 },
                 onNavigate = {
@@ -110,10 +98,14 @@ fun NavGraphBuilder.profileGraph(navHostController: NavHostController) {
             val mainImageId by viewModel.userMainProfilePic.collectAsStateWithLifecycle()
             val userPhotos by viewModel.userPhotos.collectAsStateWithLifecycle()
 
-            PhotosScreen(navController = navHostController, mainImageId = mainImageId, onNavigate = {
-
-            },
-                userPhotos = userPhotos)
+            PhotosScreen(
+                mainImageId = mainImageId,
+                onNavigate = { id ->
+                    viewModel.updateChosenPhoto(id)
+                    navHostController.navigate(ProfileItem.FullScreenPhoto.route)
+                },
+                userPhotos = userPhotos
+            )
         }
         composable(
             route = ProfileItem.FullScreenPhoto.route
@@ -123,7 +115,7 @@ fun NavGraphBuilder.profileGraph(navHostController: NavHostController) {
             val userPhotos by viewModel.userPhotos.collectAsStateWithLifecycle()
             val chosenPhoto by viewModel.chosenPhoto.collectAsStateWithLifecycle()
 
-            FullScreenPhoto(navController = navHostController, imageId = chosenPhoto, mainImageId = mainImageId, userPhotos = userPhotos)
+            FullScreenPhoto(imageId = chosenPhoto, mainImageId = mainImageId, userPhotos = userPhotos)
         }
     }
 
