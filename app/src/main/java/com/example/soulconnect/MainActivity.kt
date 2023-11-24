@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import com.example.soulconnect.navigation.NavGraph
 import com.example.soulconnect.startpage.StartPage
 import com.example.soulconnect.ui.theme.SoulConnectTheme
 
@@ -14,13 +17,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SoulConnectTheme {
+                val navController = rememberNavController()
                 Column(
-                    modifier = Modifier
+                    modifier = Modifier.fillMaxSize()
                 ) {
+                    NavGraph(navHostController = navController)
                     StartPage(
                         onLogInTapped = {
-                            val navigate = Intent(this@MainActivity, MainMenuActivity::class.java)
-                            startActivity(navigate)
+                            navController.navigate("toLogIn")
                         },
                         onSignUpTapped = {
                             val navigate = Intent(this@MainActivity, MainMenuActivity::class.java)

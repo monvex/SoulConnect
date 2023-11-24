@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -16,9 +17,9 @@ import androidx.navigation.navigation
 import com.example.soulconnect.ChatsScreen
 import com.example.soulconnect.FullScreenPhoto
 import com.example.soulconnect.GroupChatsScreen
+import com.example.soulconnect.LogInScreen
 import com.example.soulconnect.PhotosScreen
 import com.example.soulconnect.ProfileScreen
-import com.example.soulconnect.ProfileViewModel
 import com.example.soulconnect.SearchScreen
 import com.example.soulconnect.TagScreen
 
@@ -34,66 +35,15 @@ fun NavGraph(
             ChatsScreen(navHostController)
         }
         composable(BottomItem.GroupChats.route) {
-            GroupChatsScreen(navHostController)
+            LogInScreen(onNavigate = {})
         }
-        navigation(
-            startDestination = "toProfile",
-            route = BottomItem.Profile.route
-        ) {
-            composable("toProfile") {entry ->
-                val viewModel = entry.sharedViewModel<ProfileViewModel>(navHostController)
-                val state by viewModel.userTagList.collectAsStateWithLifecycle()
-                ProfileScreen(navHostController, onNavigate = {
-                    viewModel.updateUserTagList(listOf(             //TODO: переписать под получение списка из БД
-                        "Спорт",
-                        "Саморазвитие",
-                        "Фильмы",
-                        "IT",
-                        "Автомобили"
-                    ))
-                    navHostController.navigate(ProfileItem.Tags.route)
-                },
-                    tags = state)
-            }
-            composable(
-                route = ProfileItem.Tags.route
-            ){entry ->
-                val viewModel = entry.sharedViewModel<ProfileViewModel>(navHostController)
-                val state by viewModel.userTagList.collectAsStateWithLifecycle()
-                TagScreen(navHostController, state)
-            }
+        composable("toLogIn"){
+            LogInScreen(onNavigate = {})
         }
-        // Перенос аргументов в
-        composable(
-            route = ProfileItem.Photos.route,
-            arguments = listOf(
-                navArgument(name = IMAGE_ID) {
-                    type = NavType.IntType
-                }
-            )
-            ) { navBackStackEntry ->
-            val imageId = navBackStackEntry.arguments?.getInt(IMAGE_ID)
-            PhotosScreen(navController = navHostController, mainImageId = imageId)
-        }
-        composable(
-            route = ProfileItem.FullScreenPhoto.route,
-            arguments = listOf(
-                navArgument(name = IMAGE_ID) {
-                    type = NavType.IntType
-                },
-                navArgument(name = MAIN_IMAGE_ID) {
-                    type = NavType.IntType
-                }
-            )
-        ) { navBackStackEntry ->
-            val imageId = navBackStackEntry.arguments?.getInt(IMAGE_ID)
-            val mainImageId = navBackStackEntry.arguments?.getInt(MAIN_IMAGE_ID)
-            FullScreenPhoto(navController = navHostController, imageId = imageId, mainImageId)
-        }
-
+        profileGraph(navHostController)
     }
-}
 
+}
 
 @Composable
 inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
@@ -104,4 +54,66 @@ inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
         navController. getBackStackEntry(navGraphRoute)
     }
     return viewModel(parentEntry)
+}
+
+
+fun NavGraphBuilder.profileGraph(navHostController: NavHostController) {
+    navigation(
+        startDestination = BottomItem.Profile.route,
+        route = "toProfile"
+    ) {
+        composable(BottomItem.Profile.route) {entry ->
+            val viewModel = entry.sharedViewModel<ProfileViewModel>(navHostController)
+            val state by viewModel.userTagList.collectAsStateWithLifecycle()
+            ProfileScreen(
+                navHostController,
+                onNavigateToTagsScreen = {
+                    viewModel.updateUserTagList(
+                        listOf(             //TODO: переписать под получение списка из БД
+                            "Спорт",
+                            "Саморазвитие",
+                            "Фильмы",
+                            "IT",
+                            "Автомобили"
+                        )
+                    )
+                    navHostController.navigate(ProfileItem.Tags.route)
+                },
+                onNavigate = {
+                    viewModel.updateUserPhotos()
+                    navHostController.navigate(ProfileItem.Photos.route)
+                }
+            )
+        }
+        composable(
+            route = ProfileItem.Tags.route
+        ){entry ->
+            val viewModel = entry.sharedViewModel<ProfileViewModel>(navHostController)
+            val state by viewModel.userTagList.collectAsStateWithLifecycle()
+            TagScreen(navHostController, state)
+        }
+        composable(
+            route = ProfileItem.Photos.route
+        ) { navBackStackEntry ->
+            val viewModel = navBackStackEntry.sharedViewModel<ProfileViewModel>(navHostController)
+            val mainImageId by viewModel.userMainProfilePic.collectAsStateWithLifecycle()
+            val userPhotos by viewModel.userPhotos.collectAsStateWithLifecycle()
+
+            PhotosScreen(navController = navHostController, mainImageId = mainImageId, onNavigate = {
+
+            },
+                userPhotos = userPhotos)
+        }
+        composable(
+            route = ProfileItem.FullScreenPhoto.route
+        ) { navBackStackEntry ->
+            val viewModel = navBackStackEntry.sharedViewModel<ProfileViewModel>(navHostController)
+            val mainImageId by viewModel.userMainProfilePic.collectAsStateWithLifecycle()
+            val userPhotos by viewModel.userPhotos.collectAsStateWithLifecycle()
+            val chosenPhoto by viewModel.chosenPhoto.collectAsStateWithLifecycle()
+
+            FullScreenPhoto(navController = navHostController, imageId = chosenPhoto, mainImageId = mainImageId, userPhotos = userPhotos)
+        }
+    }
+
 }

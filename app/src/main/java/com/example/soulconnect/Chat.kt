@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Chat(chatId: Int? = null){
+fun Chat(chatId: Int? = null, picId: Int, name: String, text: String){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,7 +46,7 @@ fun Chat(chatId: Int? = null){
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.test_profile_pic),
+                    painter = painterResource(id = picId),
                     contentDescription = "interlocutorPhoto",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -56,13 +56,13 @@ fun Chat(chatId: Int? = null){
                 )
                 Column() {
                     Text(
-                        text = "Иван",
+                        text = name,
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily(Font(R.font.relay_comfortaa_regular, weight = FontWeight.W400, style = FontStyle.Normal))
                     )
                     Text(
                         fontFamily = FontFamily(Font(R.font.relay_comfortaa_regular, weight = FontWeight.W400, style = FontStyle.Normal)) ,
-                        text = "Го пить пиво"
+                        text = text
                     )
                 }
             }
