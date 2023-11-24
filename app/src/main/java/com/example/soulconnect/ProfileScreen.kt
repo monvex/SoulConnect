@@ -40,14 +40,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.soulconnect.navigation.ProfileItem
+import com.example.soulconnect.navigation.ProfileViewModel
 import com.example.soulconnect.text_functions.AutoResizedText
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun ProfileScreen(navController: NavController, onNavigateToTagsScreen: () -> Unit,onNavigate: () -> Unit) {
-
+    val viewModel = viewModel { ProfileViewModel() }
     val focusManager = LocalFocusManager.current
     // Основной контейнер
         Box(modifier = Modifier.fillMaxSize()) {
@@ -190,6 +192,7 @@ fun ProfileScreen(navController: NavController, onNavigateToTagsScreen: () -> Un
                     "Дизайн",
                     "Велосипед"
                 )
+                val listOfUserTags = viewModel.userTagList
                 // Контейнер с кнопкой редактирования тэгов
                 Row (
                     modifier = Modifier
