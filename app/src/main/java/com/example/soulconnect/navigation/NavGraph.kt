@@ -21,13 +21,24 @@ import com.example.soulconnect.LogInScreen
 import com.example.soulconnect.PhotosScreen
 import com.example.soulconnect.ProfileScreen
 import com.example.soulconnect.SearchScreen
+import com.example.soulconnect.StartScreen
 import com.example.soulconnect.TagScreen
 
 @Composable
 fun NavGraph(
     navHostController: NavHostController
 ) {
-    NavHost(navController = navHostController, startDestination = BottomItem.Search.route) {
+    NavHost(navController = navHostController, startDestination = "startScreen") {
+        composable("startScreen") {
+            StartScreen(
+                onNavigateToLogIn = {
+                    navHostController.navigate("toLogIn")
+                },
+                onNavigate = {
+                    navHostController.navigate(BottomItem.Search.route)
+                }
+            )
+        }
         composable(BottomItem.Search.route) {
             SearchScreen(navHostController)
         }
