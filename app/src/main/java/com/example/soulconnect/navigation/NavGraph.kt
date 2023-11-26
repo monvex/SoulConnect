@@ -20,12 +20,15 @@ import com.example.soulconnect.ProfileScreen
 import com.example.soulconnect.SearchScreen
 import com.example.soulconnect.StartScreen
 import com.example.soulconnect.TagScreen
+import com.google.firebase.auth.FirebaseUser
 
 @Composable
 fun NavGraph(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    currentUser: FirebaseUser?
 ) {
-    NavHost(navController = navHostController, startDestination = "startScreen") {
+    val startDestination = if (currentUser == null) "startScreen" else BottomItem.Search.route
+    NavHost(navController = navHostController, startDestination = startDestination) {
         composable("startScreen") {
             StartScreen(
                 onNavigateToLogIn = {

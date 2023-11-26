@@ -56,30 +56,108 @@ fun LogInScreen(onNavigate: () -> Unit)
                 )
             )
         )
-        UserInput(
-            modifier = Modifier.boxAlign(
-                alignment = Alignment.TopCenter,
-                offset = DpOffset(
-                    x = 0.dp,
-                    y = 280.dp
+        var loginText by remember { mutableStateOf("") }
+        var passwordText by remember { mutableStateOf("") }
+        Column(modifier = Modifier.boxAlign(
+            alignment = Alignment.TopCenter,
+            offset = DpOffset(
+                x = 0.dp,
+                y = 280.dp
+            )
+        )){
+            Text(
+                text = "Логин:",
+                fontFamily = FontFamily(
+                    Font(
+                        R.font.relay_comfortaa_regular,
+                        weight = FontWeight.W400,
+                        style = FontStyle.Normal
+                    )
+                ),
+                fontSize = 18.sp,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
+            OutlinedTextField(
+                value = loginText,
+                onValueChange = {loginText = it},
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(0.7f),
+                textStyle = TextStyle(
+                    color = Color.White,
+                    fontSize = 18.sp,
                 )
             )
-        )
-        EntryBlock(
-            modifier = Modifier
-                .boxAlign(
+            Text(
+                text = "Пароль:",
+                fontFamily = FontFamily(
+                    Font(
+                        R.font.relay_comfortaa_regular,
+                        weight = FontWeight.W400,
+                        style = FontStyle.Normal
+                    )
+                ),
+                fontSize = 18.sp,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
+            OutlinedTextField(
+                value = passwordText,
+                onValueChange = {passwordText = it},
+                visualTransformation = PasswordVisualTransformation(),
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(0.7f),
+                textStyle = TextStyle(
+                    color = Color.White,
+                    fontSize = 18.sp,
+                )
+            )
+        }
+    }
+    RelayContainer(
+        backgroundColor = Color(
+            alpha = 255,
+            red = 255,
+            green = 255,
+            blue = 255
+        ),
+        arrangement = RelayContainerArrangement.Row,
+        padding = PaddingValues(
+            start = 19.0.dp,
+            top = 9.0.dp,
+            end = 19.0.dp,
+            bottom = 9.0.dp
+        ),
+        itemSpacing = 10.0,
+        clipToParent = false,
+        radius = 100.0,
+        content = {Entry()},
+        modifier = Modifier
+            .tappable(onTap = {checkUserData(loginText, loginPassword)})
+            .boxAlign(
                 alignment = Alignment.TopCenter,
                 offset = DpOffset(
                     x = -0.5.dp,
                     y = 470.0.dp
-                    )
                 )
-                .fillMaxWidth(0.5f)
-        ) {
-            Entry()
-        }
-    }
+            )
+            .fillMaxWidth(0.5f)
+            .relayDropShadow(
+                color = Color(
+                    alpha = 63,
+                    red = 0,
+                    green = 0,
+                    blue = 0
+                ),
+                borderRadius = 100.0.dp,
+                blur = 4.0.dp,
+                offsetX = 0.0.dp,
+                offsetY = 4.0.dp,
+                spread = 0.0.dp
+            )
+    )
 }
+
 
 @Composable
 fun Background(modifier: Modifier = Modifier) {
@@ -100,101 +178,6 @@ fun Logo(modifier: Modifier = Modifier) {
         modifier = modifier
             .requiredWidth(85.71428680419922.dp)
             .requiredHeight(120.0.dp)
-    )
-}
-
-@Composable
-fun UserInput(modifier: Modifier = Modifier){
-    var loginText by remember { mutableStateOf("") }
-    var passwordText by remember { mutableStateOf("") }
-    Column(modifier = modifier){
-        Text(
-            text = "Логин:",
-            fontFamily = FontFamily(
-                Font(
-                    R.font.relay_comfortaa_regular,
-                    weight = FontWeight.W400,
-                    style = FontStyle.Normal
-                )
-            ),
-            fontSize = 18.sp,
-            color = Color.White,
-            fontWeight = FontWeight.Bold
-        )
-        OutlinedTextField(
-            value = loginText,
-            onValueChange = {loginText = it},
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(0.7f),
-            textStyle = TextStyle(
-                color = Color.White,
-                fontSize = 18.sp,
-            )
-        )
-        Text(
-            text = "Пароль:",
-            fontFamily = FontFamily(
-                Font(
-                    R.font.relay_comfortaa_regular,
-                    weight = FontWeight.W400,
-                    style = FontStyle.Normal
-                )
-            ),
-            fontSize = 18.sp,
-            color = Color.White,
-            fontWeight = FontWeight.Bold
-        )
-        OutlinedTextField(
-            value = passwordText,
-            onValueChange = {passwordText = it},
-            visualTransformation = PasswordVisualTransformation(),
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(0.7f),
-            textStyle = TextStyle(
-                color = Color.White,
-                fontSize = 18.sp,
-            )
-        )
-    }
-}
-
-@Composable
-fun EntryBlock(
-    modifier: Modifier = Modifier,
-    content: @Composable RelayContainerScope.() -> Unit
-) {
-    RelayContainer(
-        backgroundColor = Color(
-            alpha = 255,
-            red = 255,
-            green = 255,
-            blue = 255
-        ),
-        arrangement = RelayContainerArrangement.Row,
-        padding = PaddingValues(
-            start = 19.0.dp,
-            top = 9.0.dp,
-            end = 19.0.dp,
-            bottom = 9.0.dp
-        ),
-        itemSpacing = 10.0,
-        clipToParent = false,
-        radius = 100.0,
-        content = content,
-        modifier = modifier
-            .relayDropShadow(
-                color = Color(
-                    alpha = 63,
-                    red = 0,
-                    green = 0,
-                    blue = 0
-                ),
-                borderRadius = 100.0.dp,
-                blur = 4.0.dp,
-                offsetX = 0.0.dp,
-                offsetY = 4.0.dp,
-                spread = 0.0.dp
-            )
     )
 }
 

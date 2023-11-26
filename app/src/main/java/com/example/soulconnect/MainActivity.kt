@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,11 +17,32 @@ import com.example.soulconnect.navigation.BottomNavigation
 import com.example.soulconnect.navigation.NavGraph
 import com.example.soulconnect.startpage.StartPage
 import com.example.soulconnect.ui.theme.SoulConnectTheme
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+
 
 class MainActivity : AppCompatActivity() {
+
+    fun checkUserData(login: String, password: String) {
+        lateinit var auth: FirebaseAuth;
+        auth = Firebase.auth
+        auth.signInWithEmailAndPassword(login, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                }
+                else {
+                }
+            }
+    }
+
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        lateinit var auth: FirebaseAuth;
+        auth = Firebase.auth
+        val currentUser = auth.currentUser
         setContent {
             SoulConnectTheme {
 //                val navController = rememberNavController()
@@ -54,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 ) {
-                    NavGraph(navHostController = navController)
+                    NavGraph(navHostController = navController, currentUser)
                 }
 
             }
