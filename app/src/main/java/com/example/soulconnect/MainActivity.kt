@@ -21,22 +21,11 @@ import com.example.soulconnect.ui.theme.SoulConnectTheme
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    fun checkUserData(login: String, password: String) {
-        lateinit var auth: FirebaseAuth;
-        auth = Firebase.auth
-        auth.signInWithEmailAndPassword(login, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                }
-                else {
-                }
-            }
-    }
 
     @OptIn(ExperimentalMaterialApi::class)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -44,23 +33,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent { SoulConnectApp() }
     }
-
-
-    override fun onStart() {
-        super.onStart()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
 
 }

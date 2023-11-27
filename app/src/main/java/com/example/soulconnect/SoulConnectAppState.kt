@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 @Stable
-class MakeItSoAppState(
+class SoulConnectAppState(
     val scaffoldState: ScaffoldState,
     val navController: NavHostController,
     private val snackbarManager: SnackbarManager,

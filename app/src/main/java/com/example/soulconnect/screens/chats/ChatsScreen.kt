@@ -1,4 +1,4 @@
-package com.example.soulconnect
+package com.example.soulconnect.screens.chats
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import com.example.soulconnect.R
 
 @Composable
 fun ChatsScreen(onNavigate: (chatId: Int) -> Unit) {

@@ -12,28 +12,30 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.soulconnect.ChatsScreen
-import com.example.soulconnect.FullScreenPhoto
-import com.example.soulconnect.LogInScreen
-import com.example.soulconnect.PhotosScreen
-import com.example.soulconnect.ProfileScreen
-import com.example.soulconnect.SearchScreen
-import com.example.soulconnect.StartScreen
-import com.example.soulconnect.TagScreen
-import com.google.firebase.auth.FirebaseUser
+import com.example.soulconnect.screens.chats.ChatsScreen
+import com.example.soulconnect.screens.photos.FullScreenPhoto
+import com.example.soulconnect.screens.log_in.LogInScreen
+import com.example.soulconnect.screens.photos.PhotosScreen
+import com.example.soulconnect.screens.profile.ProfileScreen
+import com.example.soulconnect.screens.search.SearchScreen
+import com.example.soulconnect.SoulConnectAppState
+import com.example.soulconnect.screens.profile.ProfileItem
+import com.example.soulconnect.screens.profile.ProfileViewModel
+import com.example.soulconnect.screens.start.StartScreen
+import com.example.soulconnect.screens.tag.TagScreen
 
 @Composable
 fun NavGraph(
-    navHostController: NavHostController
+    appState: SoulConnectAppState
 ) {
-    NavHost(navController = navHostController, startDestination = "startScreen") {
+    NavHost(navController = appState.navController, startDestination = "startScreen") {
         composable("startScreen") {
             StartScreen(
                 onNavigateToLogIn = {
-                    navHostController.navigate("toLogIn")
+                    appState.navigateAndPopUp("startScreen", "toProfile")
                 },
                 onNavigate = {
-                    navHostController.navigate(BottomItem.Search.route)
+                    appState.navigate(BottomItem.Search.route)
                 }
             )
         }
@@ -48,10 +50,10 @@ fun NavGraph(
         composable(BottomItem.GroupChats.route) {
             LogInScreen(onNavigate = {})
         }
-        composable("toLogIn"){
-            LogInScreen(onNavigate = {})
-        }
-        profileGraph(navHostController)
+
+        logInGraph(appState)       // Граф для авторизации
+
+        profileGraph(appState)     // Граф для профиля
     }
 
 }
@@ -67,35 +69,48 @@ inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
     return viewModel(parentEntry)
 }
 
+fun NavGraphBuilder.logInGraph(appState: SoulConnectAppState) {      // Русик, переход со страницы авторизации
+    navigation(
+        startDestination = "logIn",
+        route = "toLogIn"
+    ) {
+        composable("logIn"){
+            LogInScreen(onNavigate = {
+                // Добавлять СЮДА аналогично другим переходам. Для перехода в главное меню, параметр "route" будет равен: BottomItem.Search.route
+            })
+        }
 
-fun NavGraphBuilder.profileGraph(navHostController: NavHostController) {
+    }
+}
+
+fun NavGraphBuilder.profileGraph(appState: SoulConnectAppState) {
     navigation(
         startDestination = BottomItem.Profile.route,
         route = "toProfile"
     ) {
         composable(BottomItem.Profile.route) {entry ->
-            val viewModel = entry.sharedViewModel<ProfileViewModel>(navHostController)
+            val viewModel = entry.sharedViewModel<ProfileViewModel>(appState.navController)
             ProfileScreen(
                 onNavigateToTagsScreen = {
-                    navHostController.navigate(ProfileItem.Tags.route)
+                    appState.navigate(ProfileItem.Tags.route)
                 },
                 onNavigate = {
                     viewModel.updateUserPhotos()
-                    navHostController.navigate(ProfileItem.Photos.route)
+                    appState.navigate(ProfileItem.Photos.route)
                 }
             )
         }
         composable(
             route = ProfileItem.Tags.route
         ){entry ->
-            val viewModel = entry.sharedViewModel<ProfileViewModel>(navHostController)
+            val viewModel = entry.sharedViewModel<ProfileViewModel>(appState.navController)
             val state by viewModel.userTagList.collectAsStateWithLifecycle()
-            TagScreen(navHostController, state)
+            TagScreen(state)
         }
         composable(
             route = ProfileItem.Photos.route
         ) { navBackStackEntry ->
-            val viewModel = navBackStackEntry.sharedViewModel<ProfileViewModel>(navHostController)
+            val viewModel = navBackStackEntry.sharedViewModel<ProfileViewModel>(appState.navController)
             val mainImageId by viewModel.userMainProfilePic.collectAsStateWithLifecycle()
             val userPhotos by viewModel.userPhotos.collectAsStateWithLifecycle()
 
@@ -103,7 +118,7 @@ fun NavGraphBuilder.profileGraph(navHostController: NavHostController) {
                 mainImageId = mainImageId,
                 onNavigate = { id ->
                     viewModel.updateChosenPhoto(id)
-                    navHostController.navigate(ProfileItem.FullScreenPhoto.route)
+                    appState.navigate(ProfileItem.FullScreenPhoto.route)
                 },
                 userPhotos = userPhotos
             )
@@ -111,7 +126,7 @@ fun NavGraphBuilder.profileGraph(navHostController: NavHostController) {
         composable(
             route = ProfileItem.FullScreenPhoto.route
         ) { navBackStackEntry ->
-            val viewModel = navBackStackEntry.sharedViewModel<ProfileViewModel>(navHostController)
+            val viewModel = navBackStackEntry.sharedViewModel<ProfileViewModel>(appState.navController)
             val mainImageId by viewModel.userMainProfilePic.collectAsStateWithLifecycle()
             val userPhotos by viewModel.userPhotos.collectAsStateWithLifecycle()
             val chosenPhoto by viewModel.chosenPhoto.collectAsStateWithLifecycle()

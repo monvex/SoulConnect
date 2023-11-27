@@ -1,4 +1,4 @@
-package com.example.soulconnect
+package com.example.soulconnect.screens.start
 
 import android.annotation.SuppressLint
 import androidx.compose.material3.Scaffold

@@ -1,4 +1,4 @@
-package com.example.soulconnect
+package com.example.soulconnect.screens.search
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column

@@ -1,15 +1,12 @@
-package com.example.soulconnect
+package com.example.soulconnect.screens.log_in
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,20 +28,25 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.soulconnect.R
 import com.example.soulconnect.startpage.TopLevel
 import com.example.soulconnect.startpage.comfortaa
 import com.google.relay.compose.BoxScopeInstance.boxAlign
 import com.google.relay.compose.RelayContainer
 import com.google.relay.compose.RelayContainerArrangement
-import com.google.relay.compose.RelayContainerScope
 import com.google.relay.compose.RelayImage
 import com.google.relay.compose.RelayText
 import com.google.relay.compose.relayDropShadow
 import com.google.relay.compose.tappable
 
 @Composable
-fun LogInScreen(onNavigate: () -> Unit)
+fun LogInScreen(
+    onNavigate: () -> Unit,
+    viewModel: LoginViewModel = hiltViewModel()
+)
 {
+    val uiState by viewModel.uiState
     TopLevel(modifier = Modifier) {
         Background()
         Logo(
@@ -131,9 +133,9 @@ fun LogInScreen(onNavigate: () -> Unit)
         itemSpacing = 10.0,
         clipToParent = false,
         radius = 100.0,
-        content = {Entry()},
+        content = { Entry() },
         modifier = Modifier
-            .tappable(onTap = {checkUserData(loginText, loginPassword)})
+            .tappable(onTap = {})
             .boxAlign(
                 alignment = Alignment.TopCenter,
                 offset = DpOffset(

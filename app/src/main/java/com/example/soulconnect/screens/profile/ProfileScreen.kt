@@ -1,4 +1,4 @@
-package com.example.soulconnect
+package com.example.soulconnect.screens.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -42,7 +42,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.soulconnect.navigation.ProfileViewModel
+import com.example.soulconnect.R
 import com.example.soulconnect.text_functions.AutoResizedText
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)

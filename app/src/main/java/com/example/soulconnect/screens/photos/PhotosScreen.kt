@@ -1,4 +1,4 @@
-package com.example.soulconnect
+package com.example.soulconnect.screens.photos
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
