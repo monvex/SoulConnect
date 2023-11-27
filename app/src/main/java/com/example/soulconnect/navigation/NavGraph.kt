@@ -24,11 +24,9 @@ import com.google.firebase.auth.FirebaseUser
 
 @Composable
 fun NavGraph(
-    navHostController: NavHostController,
-    currentUser: FirebaseUser?
+    navHostController: NavHostController
 ) {
-    val startDestination = if (currentUser == null) "startScreen" else BottomItem.Search.route
-    NavHost(navController = navHostController, startDestination = startDestination) {
+    NavHost(navController = navHostController, startDestination = "startScreen") {
         composable("startScreen") {
             StartScreen(
                 onNavigateToLogIn = {

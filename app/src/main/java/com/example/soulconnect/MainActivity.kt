@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -37,50 +38,11 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    @OptIn(ExperimentalMaterialApi::class)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lateinit var auth: FirebaseAuth;
-        auth = Firebase.auth
-        val currentUser = auth.currentUser
-        setContent {
-            SoulConnectTheme {
-//                val navController = rememberNavController()
-//                Column(
-//                    modifier = Modifier.fillMaxSize()
-//                ) {
-//                    NavGraph(navHostController = navController)
-//                    StartPage(
-//                        onLogInTapped = {
-//                            navController.navigate("toLogIn")
-//                        },
-//                        onSignUpTapped = {
-//                            navController.navigate()
-//                        }
-//                        )
-//                }
-                val listItems = listOf(
-                    BottomItem.Search,
-                    BottomItem.Chats,
-                    BottomItem.GroupChats,
-                    BottomItem.Profile
-                )
-                val navController = rememberNavController()
-                val showBottomBar = navController
-                    .currentBackStackEntryAsState().value?.destination?.route in listItems.map { it.route }
-
-                Scaffold(
-                    bottomBar = {
-                        if(showBottomBar) {
-                            BottomNavigation(navController = navController)
-                        }
-                    }
-                ) {
-                    NavGraph(navHostController = navController, currentUser)
-                }
-
-            }
-        }
+        setContent { SoulConnectApp() }
     }
 
 
