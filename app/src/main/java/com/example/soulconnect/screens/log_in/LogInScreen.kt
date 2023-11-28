@@ -36,6 +36,7 @@ import com.example.soulconnect.startpage.comfortaa
 import com.google.relay.compose.BoxScopeInstance.boxAlign
 import com.google.relay.compose.RelayContainer
 import com.google.relay.compose.RelayContainerArrangement
+import com.google.relay.compose.RelayContainerScope
 import com.google.relay.compose.RelayImage
 import com.google.relay.compose.RelayText
 import com.google.relay.compose.relayDropShadow
@@ -116,50 +117,18 @@ fun LogInScreen(
                 )
             )
         }
-    }
-    RelayContainer(
-        backgroundColor = Color(
-            alpha = 255,
-            red = 255,
-            green = 255,
-            blue = 255
-        ),
-        arrangement = RelayContainerArrangement.Row,
-        padding = PaddingValues(
-            start = 19.0.dp,
-            top = 9.0.dp,
-            end = 19.0.dp,
-            bottom = 9.0.dp
-        ),
-        itemSpacing = 10.0,
-        clipToParent = false,
-        radius = 100.0,
-        content = { Entry(modifier = Modifier
-            .clickable { viewModel.onSignInClick(openAndPopUp) }) },
-        modifier = Modifier
-            .tappable(onTap = {})
-            .boxAlign(
+        EntryBlock(
+            onSignUpTapped = { viewModel.onSignInClick(openAndPopUp) },
+            modifier = Modifier.boxAlign(
                 alignment = Alignment.TopCenter,
                 offset = DpOffset(
                     x = -0.5.dp,
                     y = 470.0.dp
+                    )
                 )
-            )
-            .fillMaxWidth(0.5f)
-            .relayDropShadow(
-                color = Color(
-                    alpha = 63,
-                    red = 0,
-                    green = 0,
-                    blue = 0
-                ),
-                borderRadius = 100.0.dp,
-                blur = 4.0.dp,
-                offsetX = 0.0.dp,
-                offsetY = 4.0.dp,
-                spread = 0.0.dp
-            )
-    )
+                .fillMaxWidth(0.5f)
+        ) { Entry() }
+    }
 }
 
 
@@ -182,6 +151,48 @@ fun Logo(modifier: Modifier = Modifier) {
         modifier = modifier
             .requiredWidth(85.71428680419922.dp)
             .requiredHeight(120.0.dp)
+    )
+}
+
+@Composable
+fun EntryBlock(
+    onSignUpTapped: () -> Unit,
+    modifier: Modifier = Modifier,
+    content: @Composable RelayContainerScope.() -> Unit
+) {
+    RelayContainer(
+        backgroundColor = Color(
+            alpha = 255,
+            red = 255,
+            green = 255,
+            blue = 255
+        ),
+        arrangement = RelayContainerArrangement.Row,
+        padding = PaddingValues(
+            start = 19.0.dp,
+            top = 9.0.dp,
+            end = 19.0.dp,
+            bottom = 9.0.dp
+        ),
+        itemSpacing = 10.0,
+        clipToParent = false,
+        radius = 100.0,
+        content = content,
+        modifier = modifier
+            .tappable(onTap = onSignUpTapped)
+            .relayDropShadow(
+                color = Color(
+                    alpha = 63,
+                    red = 0,
+                    green = 0,
+                    blue = 0
+                ),
+                borderRadius = 100.0.dp,
+                blur = 4.0.dp,
+                offsetX = 0.0.dp,
+                offsetY = 4.0.dp,
+                spread = 0.0.dp
+            )
     )
 }
 
