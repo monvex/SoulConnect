@@ -1,6 +1,7 @@
-package com.example.soulconnect.service.module
+package com.example.soulconnect.service
 
 import com.example.soulconnect.service.User
+import dagger.Provides
 import kotlinx.coroutines.flow.Flow
 
 
