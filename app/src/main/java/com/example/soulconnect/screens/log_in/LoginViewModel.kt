@@ -5,8 +5,8 @@ import com.example.soulconnect.R.string as AppText
 import com.example.soulconnect.SoulConnectViewModel
 import com.example.soulconnect.common.extensions.isValidEmail
 import com.example.soulconnect.common.snackbar.SnackbarManager
-import com.example.soulconnect.service.AccountService
-import com.example.soulconnect.service.LogService
+import com.example.soulconnect.model.service.AccountService
+import com.example.soulconnect.model.service.LogService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

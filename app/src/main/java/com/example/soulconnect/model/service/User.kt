@@ -1,4 +1,4 @@
-package com.example.soulconnect.service
+package com.example.soulconnect.model.service
 
 
 data class User(

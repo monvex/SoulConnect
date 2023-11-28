@@ -1,4 +1,4 @@
-package com.example.soulconnect.service.module
+package com.example.soulconnect.model.service.module
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -13,4 +13,5 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 object FirebaseModule {
+    @Provides fun auth(): FirebaseAuth = Firebase.auth
 }
