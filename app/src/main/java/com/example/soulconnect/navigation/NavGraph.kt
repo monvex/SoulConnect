@@ -19,6 +19,7 @@ import com.example.soulconnect.screens.photos.PhotosScreen
 import com.example.soulconnect.screens.profile.ProfileScreen
 import com.example.soulconnect.screens.search.SearchScreen
 import com.example.soulconnect.SoulConnectAppState
+import com.example.soulconnect.screens.group_chats.GroupChatsScreen
 import com.example.soulconnect.screens.profile.ProfileItem
 import com.example.soulconnect.screens.profile.ProfileViewModel
 import com.example.soulconnect.screens.start.StartScreen
@@ -48,7 +49,7 @@ fun NavGraph(
             })
         }
         composable(BottomItem.GroupChats.route) {
-            LogInScreen(openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp)})
+            GroupChatsScreen()
         }
 
         logInGraph(appState)       // Граф для авторизации

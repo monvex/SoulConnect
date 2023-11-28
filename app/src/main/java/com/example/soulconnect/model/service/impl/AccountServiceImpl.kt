@@ -31,6 +31,7 @@ class AccountServiceImpl @Inject constructor(private val auth: FirebaseAuth) : A
             awaitClose { auth.removeAuthStateListener(listener) }
         }
 
+
     override fun authenticate(email: String, password: String, onResult: (Throwable?) -> Unit) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { onResult(it.exception) }
