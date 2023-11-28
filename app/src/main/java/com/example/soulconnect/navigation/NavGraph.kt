@@ -32,7 +32,7 @@ fun NavGraph(
         composable("startScreen") {
             StartScreen(
                 onNavigateToLogIn = {
-                    appState.navigate("startScreen")
+                    appState.navigate("toLogIn")
                 },
                 onNavigate = {
                     appState.navigate(BottomItem.Search.route)
@@ -48,7 +48,7 @@ fun NavGraph(
             })
         }
         composable(BottomItem.GroupChats.route) {
-            LogInScreen(onNavigate = {})
+            LogInScreen(openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp)})
         }
 
         logInGraph(appState)       // Граф для авторизации
@@ -75,9 +75,7 @@ fun NavGraphBuilder.logInGraph(appState: SoulConnectAppState) {      // Руси
         route = "toLogIn"
     ) {
         composable("logIn"){
-            LogInScreen(onNavigate = {
-                // Добавлять СЮДА аналогично другим переходам. Для перехода в главное меню, параметр "route" будет равен: BottomItem.Search.route
-            })
+            LogInScreen(openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp)})
         }
 
     }

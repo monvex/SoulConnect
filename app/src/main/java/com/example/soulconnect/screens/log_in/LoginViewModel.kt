@@ -7,6 +7,7 @@ import com.example.soulconnect.common.extensions.isValidEmail
 import com.example.soulconnect.common.snackbar.SnackbarManager
 import com.example.soulconnect.model.service.AccountService
 import com.example.soulconnect.model.service.LogService
+import com.example.soulconnect.navigation.BottomItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -43,8 +44,12 @@ class LoginViewModel @Inject constructor(
         }
 
         launchCatching {
-            accountService.authenticate(email, password, {})
-            openAndPopUp("startScreen", "toLogIn")
+            accountService.authenticate(email, password) { error ->
+                if (error == null)
+                    openAndPopUp(BottomItem.Search.route, BottomItem.Search.route)
+                else             openAndPopUp("startScreen", "toLogIn")
+            }
+
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.soulconnect.screens.log_in
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,7 +43,7 @@ import com.google.relay.compose.tappable
 
 @Composable
 fun LogInScreen(
-    onNavigate: () -> Unit,
+    openAndPopUp: (String, String) -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 )
 {
@@ -81,8 +82,8 @@ fun LogInScreen(
                 fontWeight = FontWeight.Bold
             )
             OutlinedTextField(
-                value = loginText,
-                onValueChange = {loginText = it},
+                value = uiState.email,
+                onValueChange = {viewModel.onEmailChange(it)},
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(0.7f),
                 textStyle = TextStyle(
@@ -104,8 +105,8 @@ fun LogInScreen(
                 fontWeight = FontWeight.Bold
             )
             OutlinedTextField(
-                value = passwordText,
-                onValueChange = {passwordText = it},
+                value = uiState.password,
+                onValueChange = {viewModel.onPasswordChange(it)},
                 visualTransformation = PasswordVisualTransformation(),
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(0.7f),
@@ -133,7 +134,8 @@ fun LogInScreen(
         itemSpacing = 10.0,
         clipToParent = false,
         radius = 100.0,
-        content = { Entry() },
+        content = { Entry(modifier = Modifier
+            .clickable { viewModel.onSignInClick(openAndPopUp) }) },
         modifier = Modifier
             .tappable(onTap = {})
             .boxAlign(
