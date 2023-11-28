@@ -32,7 +32,7 @@ fun NavGraph(
         composable("startScreen") {
             StartScreen(
                 onNavigateToLogIn = {
-                    appState.navigateAndPopUp("startScreen", "toProfile")
+                    appState.navigate("startScreen")
                 },
                 onNavigate = {
                     appState.navigate(BottomItem.Search.route)

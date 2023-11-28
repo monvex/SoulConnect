@@ -31,32 +31,32 @@ class LoginViewModel @Inject constructor(
         uiState.value = uiState.value.copy(password = newValue)
     }
 
-//    fun onSignInClick(openAndPopUp: (String, String) -> Unit) {  TODO
-//        if (!email.isValidEmail()) {
-//            SnackbarManager.showMessage(AppText.email_error)
-//            return
-//        }
-//
-//        if (password.isBlank()) {
-//            SnackbarManager.showMessage(AppText.empty_password_error)
-//            return
-//        }
-//
-//        launchCatching {
-//            accountService.authenticate(email, password)
-//            openAndPopUp(SETTINGS_SCREEN, LOGIN_SCREEN)
-//        }
-//    }
-
-    fun onForgotPasswordClick() {
+    fun onSignInClick(openAndPopUp: (String, String) -> Unit) {
         if (!email.isValidEmail()) {
             SnackbarManager.showMessage(AppText.email_error)
             return
         }
 
+        if (password.isBlank()) {
+            SnackbarManager.showMessage(AppText.genericError)
+            return
+        }
+
         launchCatching {
-            accountService.sendRecoveryEmail(email)
-            SnackbarManager.showMessage(AppText.recovery_email_sent)
+            accountService.authenticate(email, password, {})
+            openAndPopUp("startScreen", "toLogIn")
         }
     }
+
+//    fun onForgotPasswordClick() {
+//        if (!email.isValidEmail()) {
+//            SnackbarManager.showMessage(AppText.email_error)
+//            return
+//        }
+//
+//        launchCatching {
+//            accountService.sendRecoveryEmail(email)
+//            SnackbarManager.showMessage(AppText.recovery_email_sent)
+//        }
+//    }
 }
