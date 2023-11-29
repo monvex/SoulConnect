@@ -2,6 +2,7 @@ package com.example.soulconnect
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.soulconnect.common.snackbar.SnackbarManager
 import com.example.soulconnect.common.snackbar.SnackbarMessage.Companion.toSnackbarMessage
 import com.example.soulconnect.model.service.LogService

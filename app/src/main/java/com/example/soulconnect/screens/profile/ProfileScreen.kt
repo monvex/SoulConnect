@@ -25,6 +25,7 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -42,15 +43,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.soulconnect.R
+import com.example.soulconnect.model.User
 import com.example.soulconnect.screens.log_in.LoginViewModel
 import com.example.soulconnect.text_functions.AutoResizedText
+
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun ProfileScreen(onNavigateToTagsScreen: () -> Unit,onNavigate: () -> Unit, viewModel: ProfileViewModel = hiltViewModel()) {
     val focusManager = LocalFocusManager.current
+    val user by viewModel.currentUser
     // Основной контейнер
         Box(modifier = Modifier.fillMaxSize()) {
             Image(
@@ -119,7 +124,7 @@ fun ProfileScreen(onNavigateToTagsScreen: () -> Unit,onNavigate: () -> Unit, vie
                     val age = remember {
                         mutableStateOf(20.toString())       // Заменить на данные из бд
                     }
-                    val text = "${name.value}, ${age.value}"
+                    val text = "${user.name}, ${user.age}"
                     AutoResizedText(text = text,
                         style = TextStyle(fontSize = 20.sp, color = Color.White))
                 }

@@ -1,24 +1,33 @@
 package com.example.soulconnect.screens.profile
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.soulconnect.R
 import com.example.soulconnect.SoulConnectViewModel
 import com.example.soulconnect.model.User
 import com.example.soulconnect.model.service.AccountService
 import com.example.soulconnect.model.service.LogService
 import com.example.soulconnect.model.service.StorageService
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
-
+@HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val storageService: StorageService,
     private val accountService: AccountService,
     logService: LogService
 ): SoulConnectViewModel(logService) {
+    var currentUser = mutableStateOf(User())
+//    init {
+//        launchCatching {
+//            currentUser.value = storageService.getUser() ?: User()
+//        }
+//    }
 
-    private val _user = MutableStateFlow(User())
-    var user = storageService.getUser()
+
 
     // Список тэгов пользователя
     private val _userTagList = MutableStateFlow(emptyList<String>())
@@ -36,14 +45,11 @@ class ProfileViewModel @Inject constructor(
     private val _chosenPhoto = MutableStateFlow(R.drawable.test_profile_pic)
     var chosenPhoto = _chosenPhoto.asStateFlow()
 
-
     // Обновление списка тегов пользователя
     fun updateUserTagList(tags: List<String>) {     // Переписать под получение данных из БД
         _userTagList.value = tags
     }
-    fun updateUserMainProfilePic(id: Int) {
-        _userMainProfilePic.value = id
-    }
+
 
     fun updateUserPhotos() {            // Переписать под получение данных из БД
         _userPhotos.value = listOf(
