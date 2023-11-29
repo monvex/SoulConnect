@@ -122,12 +122,6 @@ fun ProfileScreen(
                         .fillMaxHeight(0.05f),
                     contentAlignment = Alignment.Center
                 ) {
-                    val name = remember {
-                        mutableStateOf("SomeName")       // Заменить на данные из БД
-                    }
-                    val age = remember {
-                        mutableStateOf(20.toString())       // Заменить на данные из бд
-                    }
                     val text = "${user.name}, ${user.age}"
                     AutoResizedText(text = text,
                         style = TextStyle(fontSize = 20.sp, color = Color.White))
@@ -139,10 +133,7 @@ fun ProfileScreen(
                         .fillMaxHeight(0.05f),
                     contentAlignment = Alignment.Center
                 ) {
-                    val city = remember {
-                        mutableStateOf("SomeCity")      // Заменить на данные из БД
-                    }
-                    AutoResizedText(text = city.value,
+                    AutoResizedText(text = user.city,
                         style = TextStyle(fontSize = 20.sp, color = Color.White)     // Заменить на данные из БД
                     )
                 }
@@ -154,19 +145,16 @@ fun ProfileScreen(
                     ,
                     contentAlignment = Alignment.TopCenter
                 ) {
-                    val profileDescription = remember {
-                        mutableStateOf("Подниму тебя на бицепс и не только ;)")       // Заменить на данные из БД
-                    }
                     val maxCharsInDescription = 180
                     val shouldDraw = remember {
                         mutableStateOf(true)
                     }
                     OutlinedTextField(
-                        value = profileDescription.value,
+                        value = user.description,
                         onValueChange = {
                             // Добавить загрузку введенных данных в БД
-                            if(profileDescription.value.length < maxCharsInDescription)
-                                profileDescription.value = it
+                            if(user.description.length < maxCharsInDescription)
+                                user.description = it
                         },
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedContainerColor = Color.Transparent,
@@ -177,7 +165,7 @@ fun ProfileScreen(
                         ),
                         supportingText = {
                             Text(
-                                text = "${profileDescription.value.length} / $maxCharsInDescription",
+                                text = "${user.description.length} / $maxCharsInDescription",
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .drawWithContent {
@@ -197,13 +185,7 @@ fun ProfileScreen(
 
                     )
                 }
-                val list = listOf(
-                    "Музыка",
-                    "Фитнес",
-                    "Бег"
-                )
-                viewModel.updateUserTagList(list)
-                val state = viewModel.userTagList.collectAsState()
+
                 // Контейнер с кнопкой редактирования тэгов
                 Row (
                     modifier = Modifier
@@ -226,7 +208,7 @@ fun ProfileScreen(
                         .padding(start = 10.dp, end = 10.dp),
                     horizontalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
-                    state.value.forEach {
+                    user.tagList.forEach {
                         FilterChip(selected = selected.value, onClick = {selected.value = !selected.value},
                         ) {
                             Text(text = it)
