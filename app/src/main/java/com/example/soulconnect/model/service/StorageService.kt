@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface StorageService {
 
     suspend fun getUser(): User?
+    suspend fun updateUser(user : User)
 }
