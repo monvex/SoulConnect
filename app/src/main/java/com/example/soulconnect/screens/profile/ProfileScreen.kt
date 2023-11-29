@@ -56,7 +56,7 @@ import com.example.soulconnect.text_functions.AutoResizedText
 fun ProfileScreen(
     onNavigateToTagsScreen: () -> Unit,
     onNavigate: () -> Unit,
-    viewModel: ProfileViewModel = hiltViewModel()
+    viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val focusManager = LocalFocusManager.current
     val user by viewModel.currentUser
@@ -149,12 +149,12 @@ fun ProfileScreen(
                     val shouldDraw = remember {
                         mutableStateOf(true)
                     }
+
                     OutlinedTextField(
                         value = user.description,
                         onValueChange = {
-                            // Добавить загрузку введенных данных в БД
-                            if(user.description.length < maxCharsInDescription)
-                                user.description = it
+                            if(it.length <= maxCharsInDescription)
+                                viewModel.onDescriptionChange(it)
                         },
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedContainerColor = Color.Transparent,
@@ -180,9 +180,8 @@ fun ProfileScreen(
                             .fillMaxSize()
                             .onFocusChanged {
                                 shouldDraw.value = !shouldDraw.value
-                                // Добавить загрузку в БД
+                                viewModel.updateUserInfo()
                             }
-
                     )
                 }
 
@@ -199,9 +198,6 @@ fun ProfileScreen(
                 }
                 // Контейнер с тэгами пользователя
                 //TODO Довести до ума поле с тегами
-                val selected = remember {
-                    mutableStateOf(false)
-                }
                 FlowRow(
                     modifier = Modifier
                         .fillMaxSize()
@@ -209,6 +205,9 @@ fun ProfileScreen(
                     horizontalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
                     user.tagList.forEach {
+                        val selected = remember {
+                            mutableStateOf(false)
+                        }
                         FilterChip(selected = selected.value, onClick = {selected.value = !selected.value},
                         ) {
                             Text(text = it)

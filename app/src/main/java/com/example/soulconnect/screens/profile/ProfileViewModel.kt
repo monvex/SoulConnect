@@ -21,14 +21,22 @@ class ProfileViewModel @Inject constructor(
     logService: LogService
 ): SoulConnectViewModel(logService) {
     var currentUser = mutableStateOf(User())
+
+
     init {
-        updateUserInfo()
+        launchCatching {
+            currentUser.value = storageService.getUser() ?: User()
+        }
     }
 
     fun updateUserInfo() {
         launchCatching {
-            currentUser.value = storageService.getUser() ?: User()
+            storageService.updateUser(currentUser.value)
         }
+    }
+
+    fun onDescriptionChange(newValue: String) {
+        currentUser.value = currentUser.value.copy(description = newValue)
     }
 
 
