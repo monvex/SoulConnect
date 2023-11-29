@@ -2,10 +2,24 @@ package com.example.soulconnect.screens.profile
 
 import androidx.lifecycle.ViewModel
 import com.example.soulconnect.R
+import com.example.soulconnect.SoulConnectViewModel
+import com.example.soulconnect.model.User
+import com.example.soulconnect.model.service.AccountService
+import com.example.soulconnect.model.service.LogService
+import com.example.soulconnect.model.service.StorageService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel @Inject constructor(
+    private val storageService: StorageService,
+    private val accountService: AccountService,
+    logService: LogService
+): SoulConnectViewModel(logService) {
+
+    private val _user = MutableStateFlow(User())
+    var user = storageService.getUser()
+
     // Список тэгов пользователя
     private val _userTagList = MutableStateFlow(emptyList<String>())
     var userTagList = _userTagList.asStateFlow()

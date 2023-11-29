@@ -1,8 +1,7 @@
 package com.example.soulconnect.model.service.impl
 
 import com.example.soulconnect.model.service.AccountService
-import com.example.soulconnect.model.service.User
-import com.example.soulconnect.model.service.trace
+import com.example.soulconnect.model.User
 import com.google.firebase.Firebase
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -25,47 +24,25 @@ class AccountServiceImpl @Inject constructor(private val auth: FirebaseAuth) : A
         get() = callbackFlow {
             val listener =
                 FirebaseAuth.AuthStateListener { auth ->
-                    this.trySend(auth.currentUser?.let { User(it.uid, it.isAnonymous) } ?: User())
+                    this.trySend(auth.currentUser?.let { User(it.uid) } ?: User())
                 }
             auth.addAuthStateListener(listener)
             awaitClose { auth.removeAuthStateListener(listener) }
         }
 
 
-    override fun authenticate(email: String, password: String, onResult: (Throwable?) -> Unit) {
-        Firebase.auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { onResult(it.exception) }
+    override suspend fun createAnonymousAccount() {
+        auth.signInAnonymously().await()
     }
 
-//    override suspend fun sendRecoveryEmail(email: String) {
-//        auth.sendPasswordResetEmail(email).await()
-//    }
-
-    override fun createAnonymousAccount(onResult: (Throwable?) -> Unit) {
-        Firebase.auth.signInAnonymously()
-            .addOnCompleteListener { onResult(it.exception) }
+    override suspend fun authenticate(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password).await()
     }
 
-    override fun linkAccount(email: String, password: String, onResult: (Throwable?) -> Unit) {
+    override suspend fun linkAccount(email: String, password: String) {
         val credential = EmailAuthProvider.getCredential(email, password)
-
-        Firebase.auth.currentUser!!.linkWithCredential(credential)
-            .addOnCompleteListener { onResult(it.exception) }
+        auth.currentUser!!.linkWithCredential(credential).await()
     }
-
-//    override suspend fun deleteAccount() {
-//        auth.currentUser!!.delete().await()
-//    }
-
-//    override suspend fun signOut() {
-//        if (auth.currentUser!!.isAnonymous) {
-//            auth.currentUser!!.delete()
-//        }
-//        auth.signOut()
-//
-//        // Sign the user back in anonymously.
-//        createAnonymousAccount()
-//    }
 
     companion object {
         private const val LINK_ACCOUNT_TRACE = "linkAccount"

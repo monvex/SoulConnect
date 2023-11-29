@@ -1,18 +1,14 @@
 package com.example.soulconnect.screens.log_in
 
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.soulconnect.R.string as AppText
 import com.example.soulconnect.SoulConnectViewModel
 import com.example.soulconnect.common.extensions.isValidEmail
 import com.example.soulconnect.common.snackbar.SnackbarManager
 import com.example.soulconnect.model.service.AccountService
 import com.example.soulconnect.model.service.LogService
-import com.example.soulconnect.model.service.User
 import com.example.soulconnect.navigation.BottomItem
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,12 +45,8 @@ class LoginViewModel @Inject constructor(
         }
 
         launchCatching {
-            accountService.authenticate(email.trim(), password.trim()) { error ->
-                if (error == null)
-                    openAndPopUp(BottomItem.Search.route, BottomItem.Search.route)
-                else openAndPopUp("toLogin", "toLogIn")
-            }
-
+            accountService.authenticate(email, password)
+            openAndPopUp(BottomItem.Search.route, BottomItem.Search.route)
         }
     }
 

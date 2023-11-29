@@ -41,14 +41,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.soulconnect.R
+import com.example.soulconnect.screens.log_in.LoginViewModel
 import com.example.soulconnect.text_functions.AutoResizedText
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun ProfileScreen(onNavigateToTagsScreen: () -> Unit,onNavigate: () -> Unit) {
-    val viewModel = viewModel { ProfileViewModel() }
+fun ProfileScreen(onNavigateToTagsScreen: () -> Unit,onNavigate: () -> Unit, viewModel: ProfileViewModel = hiltViewModel()) {
     val focusManager = LocalFocusManager.current
     // Основной контейнер
         Box(modifier = Modifier.fillMaxSize()) {

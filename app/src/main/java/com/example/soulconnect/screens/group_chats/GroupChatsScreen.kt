@@ -5,9 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
-import com.example.soulconnect.model.service.User
+import com.example.soulconnect.model.User
 import com.example.soulconnect.screens.log_in.LoginViewModel
 
 @Composable
