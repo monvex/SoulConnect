@@ -2,9 +2,11 @@ package com.example.soulconnect.model.service.module
 
 import com.example.soulconnect.model.service.AccountService
 import com.example.soulconnect.model.service.LogService
+import com.example.soulconnect.model.service.SearchService
 import com.example.soulconnect.model.service.StorageService
 import com.example.soulconnect.model.service.impl.AccountServiceImpl
 import com.example.soulconnect.model.service.impl.LogServiceImpl
+import com.example.soulconnect.model.service.impl.SearchServiceImpl
 import com.example.soulconnect.model.service.impl.StorageServiceImpl
 import dagger.Binds
 import dagger.Module
@@ -21,4 +23,6 @@ abstract class ServiceModule {
     abstract fun provideLogService(impl: LogServiceImpl): LogService
     @Binds
     abstract fun provideStorageService(impl: StorageServiceImpl): StorageService
+    @Binds
+    abstract fun provideSearchService(impl: SearchServiceImpl): SearchService
 }
