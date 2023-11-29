@@ -88,13 +88,11 @@ fun NavGraphBuilder.profileGraph(appState: SoulConnectAppState) {
         route = "toProfile"
     ) {
         composable(BottomItem.Profile.route) {entry ->
-            val viewModel = entry.sharedViewModel<ProfileViewModel>(appState.navController)
             ProfileScreen(
                 onNavigateToTagsScreen = {
                     appState.navigate(ProfileItem.Tags.route)
                 },
                 onNavigate = {
-                    viewModel.updateUserPhotos()
                     appState.navigate(ProfileItem.Photos.route)
                 }
             )

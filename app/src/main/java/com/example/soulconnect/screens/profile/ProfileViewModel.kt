@@ -16,16 +16,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val storageService: StorageService,
     private val accountService: AccountService,
+    private val storageService: StorageService,
     logService: LogService
 ): SoulConnectViewModel(logService) {
     var currentUser = mutableStateOf(User())
-//    init {
-//        launchCatching {
-//            currentUser.value = storageService.getUser() ?: User()
-//        }
-//    }
+    init {
+        launchCatching {
+            currentUser.value = storageService.getUser() ?: User()
+        }
+    }
 
 
 

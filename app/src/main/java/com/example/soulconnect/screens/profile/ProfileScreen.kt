@@ -53,7 +53,11 @@ import com.example.soulconnect.text_functions.AutoResizedText
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun ProfileScreen(onNavigateToTagsScreen: () -> Unit,onNavigate: () -> Unit, viewModel: ProfileViewModel = hiltViewModel()) {
+fun ProfileScreen(
+    onNavigateToTagsScreen: () -> Unit,
+    onNavigate: () -> Unit,
+    viewModel: ProfileViewModel = hiltViewModel()
+) {
     val focusManager = LocalFocusManager.current
     val user by viewModel.currentUser
     // Основной контейнер
