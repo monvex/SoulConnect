@@ -3,6 +3,7 @@ package com.example.soulconnect.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -27,7 +28,8 @@ import com.example.soulconnect.screens.tag.TagScreen
 
 @Composable
 fun NavGraph(
-    appState: SoulConnectAppState
+    appState: SoulConnectAppState,
+    viewModel: ProfileViewModel = hiltViewModel()
 ) {
     NavHost(navController = appState.navController, startDestination = "startScreen") {
         composable("startScreen") {
@@ -100,9 +102,7 @@ fun NavGraphBuilder.profileGraph(appState: SoulConnectAppState) {
         composable(
             route = ProfileItem.Tags.route
         ){entry ->
-            val viewModel = entry.sharedViewModel<ProfileViewModel>(appState.navController)
-            val state by viewModel.userTagList.collectAsStateWithLifecycle()
-            TagScreen(state)
+            TagScreen()
         }
         composable(
             route = ProfileItem.Photos.route
