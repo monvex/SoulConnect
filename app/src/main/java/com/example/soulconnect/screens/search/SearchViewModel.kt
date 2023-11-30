@@ -24,17 +24,13 @@ class SearchViewModel @Inject constructor(
     private val queue: Queue<User> = LinkedList()
     var uiState = mutableStateOf(SearchUiState())
         private set
-    val users = searchService.users
+    var users = searchService.users
 
 
     init {
-        viewModelScope.launch {
-            users.collect {
-                uiState.value = uiState.value.copy(candidate = it[0])
-                uiState.value = uiState.value.copy(candidatesList = it)
-            }
-        }
+        updateCandidates()
     }
+
 
     fun updateCurrentUser() {
         launchCatching {
@@ -51,10 +47,14 @@ class SearchViewModel @Inject constructor(
 
     fun updateCandidates() {
         launchCatching {
-            uiState.value = uiState.value.copy(candidatesList = searchService.getUsers())
-        }
-        uiState.value.candidatesList.forEach {
-            queue.add(it)
+            users = searchService.users
+            users.collect {
+                uiState.value = uiState.value.copy(candidate = it[0])
+                uiState.value = uiState.value.copy(candidatesList = it)
+                uiState.value.candidatesList.forEach {
+                    queue.add(it)
+                }
+            }
         }
     }
 

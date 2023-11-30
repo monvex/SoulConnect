@@ -55,12 +55,10 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState
-    val users = viewModel.users.collectAsStateWithLifecycle(emptyList())
+
     SearchScreenContent(
         uiState,
         update = {
-            viewModel.updateCandidates()
-            viewModel.updateCurrentUser()
             viewModel.updateCandidate()
         }
     )
@@ -114,14 +112,11 @@ fun SearchScreenContent(
                     onDragEnd = {
                         when (direction) {
                             0 -> {
-                                SnackbarManager.clearSnackbarState()
-                                SnackbarManager.showMessage(R.string.right)
-
+                                update()
                             }
 
                             1 -> {
-                                SnackbarManager.clearSnackbarState()
-                                SnackbarManager.showMessage(R.string.left)
+                                update()
                             }
                         }
                     })
