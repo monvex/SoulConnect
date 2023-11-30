@@ -11,7 +11,7 @@ import com.example.soulconnect.screens.log_in.LoginViewModel
 @Composable
 fun GroupChatsScreen(viewModel: LoginViewModel = hiltViewModel()) {
     Row() {
-        val curUser = viewModel.currentUser.collectAsStateWithLifecycle(User())
-        Text(text = curUser.value.toString())
+        val curUser = viewModel.currentUser
+        Text(text = curUser.toString())
     }
 }

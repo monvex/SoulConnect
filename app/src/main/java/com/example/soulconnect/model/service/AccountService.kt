@@ -1,6 +1,7 @@
 package com.example.soulconnect.model.service
 
 import com.example.soulconnect.model.User
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 
 

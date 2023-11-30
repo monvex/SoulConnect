@@ -27,13 +27,13 @@ class LoginViewModel @Inject constructor(
     fun onEmailChange(newValue: String) {
         uiState.value = uiState.value.copy(email = newValue)
     }
-    val currentUser = accountService.currentUser //Удалить
+    val currentUser = accountService.hasUser
 
     fun onPasswordChange(newValue: String) {
         uiState.value = uiState.value.copy(password = newValue)
     }
 
-    fun onSignInClick(openAndPopUp: (String, String) -> Unit) {
+    fun onSignInClick(clearAndNavigate: (String) -> Unit) {
         if (!email.isValidEmail()) {
             SnackbarManager.showMessage(AppText.email_error)
             return
@@ -46,7 +46,7 @@ class LoginViewModel @Inject constructor(
 
         launchCatching {
             accountService.authenticate(email, password)
-            openAndPopUp(BottomItem.Search.route, BottomItem.Search.route)
+            clearAndNavigate(BottomItem.Search.route)
         }
     }
 

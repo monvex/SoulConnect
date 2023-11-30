@@ -1,6 +1,5 @@
 package com.example.soulconnect.screens.log_in
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,7 +32,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.soulconnect.R
 import com.example.soulconnect.startpage.TopLevel
 import com.example.soulconnect.startpage.comfortaa
-import com.google.relay.compose.BoxScopeInstance.boxAlign
 import com.google.relay.compose.RelayContainer
 import com.google.relay.compose.RelayContainerArrangement
 import com.google.relay.compose.RelayContainerScope
@@ -44,7 +42,7 @@ import com.google.relay.compose.tappable
 
 @Composable
 fun LogInScreen(
-    openAndPopUp: (String, String) -> Unit,
+    clearAndNavigate: (String) -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 )
 {
@@ -118,7 +116,7 @@ fun LogInScreen(
             )
         }
         EntryBlock(
-            onSignUpTapped = { viewModel.onSignInClick(openAndPopUp) },
+            onSignUpTapped = { viewModel.onSignInClick(clearAndNavigate) },
             modifier = Modifier.boxAlign(
                 alignment = Alignment.TopCenter,
                 offset = DpOffset(

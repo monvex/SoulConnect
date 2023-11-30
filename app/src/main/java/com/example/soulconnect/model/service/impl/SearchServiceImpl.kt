@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class SearchServiceImpl @Inject constructor(private val firestore: FirebaseFirestore, private val auth: AccountService) :
     SearchService {
-    override suspend fun getSortedCandidates(user: User, otherUsers: List<User>): List<User> {
+    override suspend fun getSortedCandidates(user: User?, otherUsers: List<User?>): List<User> {
         TODO("Not yet implemented")
     }
 

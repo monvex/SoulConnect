@@ -32,7 +32,7 @@ fun NavGraph(
     appState: SoulConnectAppState,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
-    NavHost(navController = appState.navController, startDestination = "startScreen") {
+    NavHost(navController = appState.navController, startDestination = "checkAuth") {
         composable("startScreen") {
             StartScreen(
                 onNavigateToLogIn = {
@@ -42,6 +42,14 @@ fun NavGraph(
                     appState.navigate(BottomItem.Search.route)
                 }
             )
+        }
+        composable("checkAuth") {
+            if(!viewModel.currentUser) {
+                appState.navigate("startScreen")
+            }
+            else {
+                appState.clearAndNavigate(BottomItem.Search.route)
+            }
         }
         composable(BottomItem.Search.route) {
             SearchScreen()
@@ -79,7 +87,7 @@ fun NavGraphBuilder.logInGraph(appState: SoulConnectAppState) {      // Руси
         route = "toLogIn"
     ) {
         composable("logIn"){
-            LogInScreen(openAndPopUp = {route, popUp -> appState.navigateAndPopUp(route, popUp)})
+            LogInScreen(clearAndNavigate = { route -> appState.clearAndNavigate(route)})
         }
 
     }
@@ -93,14 +101,16 @@ fun NavGraphBuilder.profileGraph(appState: SoulConnectAppState) {
         composable(BottomItem.Profile.route) {
             ProfileScreen(
                 onNavigateToTagsScreen = {
-                    appState.navigate(ProfileItem.Tags.route)
+                    appState.navigateAndPopUp(ProfileItem.Tags.route, "startScreen")
                 },
                 onNavigate = {
                     appState.navigate(ProfileItem.Photos.route)
                 }
             )
         }
-        composable(route = ProfileItem.Tags.route){
+        composable(
+            route = ProfileItem.Tags.route
+        ){entry ->
             TagScreen()
         }
         composable(
