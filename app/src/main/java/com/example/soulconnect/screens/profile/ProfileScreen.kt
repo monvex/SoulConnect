@@ -155,6 +155,7 @@ fun ProfileScreen(
                         onValueChange = {
                             if(it.length <= maxCharsInDescription)
                                 viewModel.onDescriptionChange(it)
+                            viewModel.updateUserInfo()
                         },
                         colors = OutlinedTextFieldDefaults.colors(
                             unfocusedContainerColor = Color.Transparent,
@@ -180,7 +181,7 @@ fun ProfileScreen(
                             .fillMaxSize()
                             .onFocusChanged {
                                 shouldDraw.value = !shouldDraw.value
-                                viewModel.updateUserInfo()
+                                viewModel.getUserInfo()
                             }
                     )
                 }

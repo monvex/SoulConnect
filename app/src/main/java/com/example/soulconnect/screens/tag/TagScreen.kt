@@ -13,6 +13,8 @@ import androidx.compose.material.FilterChip
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -30,9 +32,10 @@ import com.example.soulconnect.screens.profile.ProfileViewModel
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun TagScreen(
-    viewModel: ProfileViewModel = hiltViewModel()
+    viewModel: TagViewModel = hiltViewModel()
 ){
-    val currentUser by viewModel.currentUser
+    val user by viewModel.currentUser
+    val userTagList = remember { mutableStateOf(mutableListOf<String>()) }
     val tagsList = mapOf<String, List<String>>(
         "Творчество" to listOf<String>("Фотография", "Видеосъемка", "Дизайн", "Макияж", "Рукоделие", "Пение", "Танцы", "Музыка", "Блог", "Рисование"),
         "Активный образ жизни" to listOf<String>("Бег", "Фитнес", "Велосипед", "Верховная езда", "Лыжи", "Йога", "Пилатес", "Сноуборд", "Ролики", "Скейтборд", "Самокат")
@@ -43,7 +46,7 @@ fun TagScreen(
         contentScale = ContentScale.Crop,
         modifier = Modifier.fillMaxSize()
     )
-    Column(modifier = Modifier.fillMaxSize()) //TODO: изменить на LazyColumn()
+    Column(modifier = Modifier.fillMaxSize())
     {
         for ((key, value) in tagsList){
             Box(modifier = Modifier.padding(5.dp)) {
@@ -67,23 +70,19 @@ fun TagScreen(
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 for (tag in value) {
-                    FilterChip(selected = false, onClick = {}) {
+                    val selectedTag = remember{mutableStateOf(userTagList.value.contains(tag))}
+                    FilterChip(selected = selectedTag.value, onClick = {
+                        selectedTag.value = !selectedTag.value
+                        if (selectedTag.value) userTagList.value.add(tag)
+                        else userTagList.value.remove(tag)
+                        viewModel.onTagsChange(userTagList.value)
+                        viewModel.updateUserInfo()
+                    }) {
                         Text(text = "$tag")
                     }
                 }
             }
 
-        }
-        FlowRow(
-            modifier = Modifier
-                .padding(start = 10.dp, end = 10.dp),
-            horizontalArrangement = Arrangement.spacedBy(5.dp)
-        ) {
-            for (tag in currentUser.tagList) {
-                FilterChip(selected = false, onClick = {}) {
-                    Text(text = "$tag")
-                }
-            }
         }
     }
 }

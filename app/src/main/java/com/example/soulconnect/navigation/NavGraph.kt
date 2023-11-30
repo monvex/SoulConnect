@@ -21,6 +21,7 @@ import com.example.soulconnect.screens.profile.ProfileScreen
 import com.example.soulconnect.screens.search.SearchScreen
 import com.example.soulconnect.SoulConnectAppState
 import com.example.soulconnect.screens.group_chats.GroupChatsScreen
+import com.example.soulconnect.screens.log_in.LoginViewModel
 import com.example.soulconnect.screens.profile.ProfileItem
 import com.example.soulconnect.screens.profile.ProfileViewModel
 import com.example.soulconnect.screens.start.StartScreen
@@ -29,7 +30,7 @@ import com.example.soulconnect.screens.tag.TagScreen
 @Composable
 fun NavGraph(
     appState: SoulConnectAppState,
-    viewModel: ProfileViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     NavHost(navController = appState.navController, startDestination = "startScreen") {
         composable("startScreen") {
@@ -89,7 +90,7 @@ fun NavGraphBuilder.profileGraph(appState: SoulConnectAppState) {
         startDestination = BottomItem.Profile.route,
         route = "toProfile"
     ) {
-        composable(BottomItem.Profile.route) {entry ->
+        composable(BottomItem.Profile.route) {
             ProfileScreen(
                 onNavigateToTagsScreen = {
                     appState.navigate(ProfileItem.Tags.route)
@@ -99,9 +100,7 @@ fun NavGraphBuilder.profileGraph(appState: SoulConnectAppState) {
                 }
             )
         }
-        composable(
-            route = ProfileItem.Tags.route
-        ){entry ->
+        composable(route = ProfileItem.Tags.route){
             TagScreen()
         }
         composable(

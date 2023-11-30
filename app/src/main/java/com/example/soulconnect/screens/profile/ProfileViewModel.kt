@@ -10,6 +10,7 @@ import com.example.soulconnect.model.service.AccountService
 import com.example.soulconnect.model.service.LogService
 import com.example.soulconnect.model.service.StorageService
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,11 +24,12 @@ class ProfileViewModel @Inject constructor(
     var currentUser = mutableStateOf(User())
 
 
-    init {
+    fun getUserInfo(){
         launchCatching {
             currentUser.value = storageService.getUser() ?: User()
         }
     }
+
 
     fun updateUserInfo() {
         launchCatching {
