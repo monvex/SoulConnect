@@ -28,6 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PaintingStyle.Companion.Stroke
+import androidx.compose.ui.graphics.StrokeJoin
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -127,6 +130,15 @@ fun SearchScreenContent(
         {
             // Фотография
             /* TODO: Фотография кандидата */
+            Box(modifier = Modifier
+                .fillMaxSize()
+            ) {
+                Image(painter = painterResource(id = R.drawable.test_pic_1), contentDescription = "test", modifier = Modifier
+                    .fillMaxSize(),
+                    contentScale = ContentScale.FillBounds
+                )
+            }
+
             Column(
             ) {
                 // Город
@@ -151,8 +163,31 @@ fun SearchScreenContent(
                 // Пустой контейнер
                 Box(modifier = Modifier
                     .fillMaxWidth()
-                    .fillMaxHeight(0.75f)
+                    .fillMaxHeight(0.7f)
                 )
+
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(0.25f)
+                    .padding(start = 20.dp)
+
+                ) {
+                    Text(
+                        text = "${uiState.candidate?.name}, ${uiState.candidate?.age}", /* TODO: заменить */
+                        fontFamily = FontFamily(
+                            Font(
+                                R.font.relay_comfortaa_regular,
+                                weight = FontWeight.W400,
+                                style = FontStyle.Normal
+                            )
+                        ),
+                        fontSize = 30.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                        )
+
+                }
+
 
                 Box(modifier = Modifier
                     .fillMaxSize()
@@ -170,8 +205,7 @@ fun SearchScreenContent(
                             )
                         ),
                         fontSize = 18.sp,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold
+                        color = Color.White
                     )
                 }
                 // Нижняя часть фотографии с описанием кандидата(1 фото - текстовое, второе тэги, дальше тэги)
