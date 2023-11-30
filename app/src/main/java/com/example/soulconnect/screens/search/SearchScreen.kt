@@ -41,8 +41,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.soulconnect.R
 import com.example.soulconnect.common.snackbar.SnackbarManager
+import com.example.soulconnect.model.User
 import com.example.soulconnect.text_functions.AutoResizedText
 import org.checkerframework.checker.signature.qual.PrimitiveType
 import kotlin.math.abs
@@ -53,8 +55,14 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState
+    val users = viewModel.users.collectAsStateWithLifecycle(emptyList())
     SearchScreenContent(
-        uiState
+        uiState,
+        update = {
+            viewModel.updateCandidates()
+            viewModel.updateCurrentUser()
+            viewModel.updateCandidate()
+        }
     )
 }
 
@@ -62,7 +70,8 @@ fun SearchScreen(
 
 @Composable
 fun SearchScreenContent(
-    uiState: SearchUiState
+    uiState: SearchUiState,
+    update: () -> Unit
 ) {
 
     Image(
@@ -83,18 +92,18 @@ fun SearchScreenContent(
             .clip(RoundedCornerShape(20.dp))
             .fillMaxHeight(0.8f)
             .fillMaxWidth(0.95f)
-            .background(color = Color.Yellow)
             .pointerInput(Unit) {
                 detectDragGestures(
                     onDrag = { change, dragAmount ->
                         change.consume()
                         val (x, y) = dragAmount
-                        if(abs(x) > abs(y)){
+                        if (abs(x) > abs(y)) {
                             when {
                                 x > 0 -> {
                                     //right
                                     direction = 0
                                 }
+
                                 x < 0 -> {
                                     // left
                                     direction = 1
@@ -109,13 +118,14 @@ fun SearchScreenContent(
                                 SnackbarManager.showMessage(R.string.right)
 
                             }
+
                             1 -> {
                                 SnackbarManager.clearSnackbarState()
                                 SnackbarManager.showMessage(R.string.left)
                             }
-                            }
-                        })
-                    },
+                        }
+                    })
+            },
                 contentAlignment = Alignment.TopCenter
                 )
 

@@ -24,13 +24,15 @@ import com.example.soulconnect.screens.group_chats.GroupChatsScreen
 import com.example.soulconnect.screens.log_in.LoginViewModel
 import com.example.soulconnect.screens.profile.ProfileItem
 import com.example.soulconnect.screens.profile.ProfileViewModel
+import com.example.soulconnect.screens.search.SearchViewModel
 import com.example.soulconnect.screens.start.StartScreen
 import com.example.soulconnect.screens.tag.TagScreen
 
 @Composable
 fun NavGraph(
     appState: SoulConnectAppState,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel(),
+    searchViewModel: SearchViewModel = hiltViewModel()
 ) {
     NavHost(navController = appState.navController, startDestination = "checkAuth") {
         composable("startScreen") {
