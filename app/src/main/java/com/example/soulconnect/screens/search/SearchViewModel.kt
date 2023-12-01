@@ -50,12 +50,11 @@ class SearchViewModel @Inject constructor(
             users = searchService.users
             users.collect {
                 uiState.value = uiState.value.copy(candidate = it[0])
-                uiState.value = uiState.value.copy(candidatesList = it)
+                uiState.value = uiState.value.copy(candidatesList = searchService.getSortedCandidates(storageService.getUser(), it))
                 uiState.value.candidatesList.forEach {
                     queue.add(it)
                 }
             }
         }
     }
-
 }

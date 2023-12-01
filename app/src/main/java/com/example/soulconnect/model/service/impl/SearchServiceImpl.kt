@@ -24,8 +24,33 @@ class SearchServiceImpl @Inject constructor(private val firestore: FirebaseFires
         get() = auth.currentUser.flatMapLatest {
             firestore.collection("users").dataObjects()
         }
-    override suspend fun getSortedCandidates(user: User?, users: List<User?>): List<User?> {
-        return users
+    override suspend fun getSortedCandidates(user: User?, users: List<User?>): List<User> {
+        if (user == null) {
+            return emptyList()
+        }
+
+        val weightedSimilarity = mutableListOf<Pair<String, Double>>()
+
+        for (otherUser in users.filterNotNull()) {
+            if (otherUser.name != user.name) {
+                val ageSimilarity =
+                    1 - kotlin.math.abs((user.age.toInt() - otherUser.age.toInt()) / 10.0)
+                val interestsSimilarity =
+                    user.tagList.intersect(otherUser.tagList).size.toDouble() / user.tagList.size
+                val weightAge = 0.3
+                val weightInterests = 0.8
+                val compositeSimilarity =
+                    weightAge * ageSimilarity + weightInterests * interestsSimilarity
+
+                weightedSimilarity.add(Pair(otherUser.name, compositeSimilarity))
+            }
+        }
+        val sortedSimilarity = weightedSimilarity.sortedByDescending { it.second }
+        val sortedUsers = sortedSimilarity.mapNotNull { (userName, _) ->
+            users.find { it?.name == userName }
+        }
+
+        return sortedUsers
     }
 
     override suspend fun getUsers(): List<User> =
