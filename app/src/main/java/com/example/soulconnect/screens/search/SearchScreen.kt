@@ -45,6 +45,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.soulconnect.R
 import com.example.soulconnect.common.snackbar.SnackbarManager
 import com.example.soulconnect.model.User
@@ -69,6 +71,7 @@ fun SearchScreen(
 
 
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun SearchScreenContent(
     uiState: SearchUiState,
@@ -133,7 +136,7 @@ fun SearchScreenContent(
             Box(modifier = Modifier
                 .fillMaxSize()
             ) {
-                Image(painter = painterResource(id = R.drawable.test_pic_1), contentDescription = "test", modifier = Modifier
+                GlideImage(model = uiState.candidate?.avatar ?: "Анлак", contentDescription = "test", modifier = Modifier
                     .fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
