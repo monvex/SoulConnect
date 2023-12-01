@@ -79,6 +79,7 @@ dependencies {
     implementation("com.google.firebase:firebase-perf")
     implementation("com.google.firebase:firebase-config")
     implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-storage:20.3.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -98,6 +99,7 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")
     implementation("com.google.dagger:hilt-android:2.47")
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
     ksp("com.google.dagger:hilt-compiler:2.47")
 }
 

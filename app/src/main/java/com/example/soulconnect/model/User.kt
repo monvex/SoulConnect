@@ -7,5 +7,6 @@ data class User(
     val age: String = "",
     val description: String = "",
     val city: String = "",
-    var tagList: MutableList<String> = mutableListOf()
+    var tagList: MutableList<String> = mutableListOf(),
+    val avatar: String = ""
 )

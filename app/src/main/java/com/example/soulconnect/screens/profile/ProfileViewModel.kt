@@ -23,7 +23,6 @@ class ProfileViewModel @Inject constructor(
 ): SoulConnectViewModel(logService) {
     var currentUser = mutableStateOf(User())
 
-
     fun getUserInfo(){
         launchCatching {
             currentUser.value = storageService.getUser() ?: User()

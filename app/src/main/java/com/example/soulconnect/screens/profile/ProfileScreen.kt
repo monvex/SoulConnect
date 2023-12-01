@@ -45,13 +45,17 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.soulconnect.R
 import com.example.soulconnect.model.User
 import com.example.soulconnect.screens.log_in.LoginViewModel
 import com.example.soulconnect.text_functions.AutoResizedText
 
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class,
+    ExperimentalGlideComposeApi::class
+)
 @Composable
 fun ProfileScreen(
     onNavigateToTagsScreen: () -> Unit,
@@ -98,8 +102,8 @@ fun ProfileScreen(
                         val imageId = remember {
                             mutableStateOf(R.drawable.test_profile_pic)         // Заменить на фотографию из БД
                         }
-                        Image(
-                            painter = painterResource(id = imageId.value),
+                        GlideImage(
+                            model = user.avatar,
                             contentDescription = "ProfilePic",
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
