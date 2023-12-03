@@ -107,6 +107,9 @@ fun NavGraphBuilder.profileGraph(appState: SoulConnectAppState) {
                 },
                 onNavigate = {
                     appState.navigate(ProfileItem.Photos.route)
+                },
+                onStartScreen = {
+                    appState.navigate("startScreen")
                 }
             )
         }

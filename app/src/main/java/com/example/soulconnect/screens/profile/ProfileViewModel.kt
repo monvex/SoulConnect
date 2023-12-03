@@ -9,6 +9,8 @@ import com.example.soulconnect.model.User
 import com.example.soulconnect.model.service.AccountService
 import com.example.soulconnect.model.service.LogService
 import com.example.soulconnect.model.service.StorageService
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
@@ -38,6 +40,10 @@ class ProfileViewModel @Inject constructor(
 
     fun onDescriptionChange(newValue: String) {
         currentUser.value = currentUser.value.copy(description = newValue)
+    }
+
+    fun onLogout() {
+        Firebase.auth.signOut()
     }
 
 

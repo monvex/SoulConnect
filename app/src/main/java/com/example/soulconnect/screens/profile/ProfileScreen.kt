@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -51,6 +52,7 @@ import com.example.soulconnect.R
 import com.example.soulconnect.model.User
 import com.example.soulconnect.screens.log_in.LoginViewModel
 import com.example.soulconnect.text_functions.AutoResizedText
+import com.google.relay.compose.tappable
 
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalLayoutApi::class,
@@ -60,6 +62,7 @@ import com.example.soulconnect.text_functions.AutoResizedText
 fun ProfileScreen(
     onNavigateToTagsScreen: () -> Unit,
     onNavigate: () -> Unit,
+    onStartScreen: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val focusManager = LocalFocusManager.current
@@ -88,6 +91,22 @@ fun ProfileScreen(
                         .fillMaxHeight(0.05f)
                         .fillMaxWidth()
                 ){
+                    Column(
+                        horizontalAlignment = Alignment.End,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            textAlign = TextAlign.End,
+                            text = "Выйти",
+                            color = Color.Red,
+                            modifier = Modifier
+                                .padding(10.dp, 5.dp)
+                                .tappable(onTap = {
+                                    viewModel.onLogout()
+                                    onStartScreen()
+                                })
+                        )
+                    }
                 }
 
                 // Контейнер с главной фотографией профиля
