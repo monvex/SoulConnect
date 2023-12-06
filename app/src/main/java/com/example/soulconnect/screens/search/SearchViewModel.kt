@@ -37,6 +37,11 @@ class SearchViewModel @Inject constructor(
             uiState.value = uiState.value.copy(currentUser = storageService.getUser())
         }
     }
+
+    fun updateLikeList(likeList: MutableList<String>?){
+        uiState.value = uiState.value.copy(candidate = uiState.value.candidate?.copy(likeList = likeList ?: mutableListOf()))
+    }
+
     fun updateCandidate() {
         if(queue.size < 1) {
             updateCandidates()
@@ -55,6 +60,12 @@ class SearchViewModel @Inject constructor(
                     queue.add(it)
                 }
             }
+        }
+    }
+
+    fun updateUserInfo(user: User?) {
+        launchCatching {
+            if (user != null) storageService.updateUser(user)
         }
     }
 }

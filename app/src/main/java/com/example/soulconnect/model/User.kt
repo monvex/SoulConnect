@@ -8,5 +8,6 @@ data class User(
     val description: String = "",
     val city: String = "",
     var tagList: MutableList<String> = mutableListOf(),
-    val avatar: String = ""
+    val avatar: String = "",
+    var likeList: MutableList<String> = mutableListOf()
 )

@@ -60,11 +60,17 @@ fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState
-
+    viewModel.updateCurrentUser()
     SearchScreenContent(
         uiState,
         update = {
             viewModel.updateCandidate()
+        },
+        updateUserInfo = {
+            viewModel.updateUserInfo(uiState.candidate)
+        },
+        updateLikeList = {
+            viewModel.updateLikeList(it)
         }
     )
 }
@@ -75,7 +81,10 @@ fun SearchScreen(
 @Composable
 fun SearchScreenContent(
     uiState: SearchUiState,
-    update: () -> Unit
+    update: () -> Unit,
+    updateUserInfo: () -> Unit,
+    updateLikeList: (MutableList<String>?) -> Unit,
+    viewModel: SearchViewModel = hiltViewModel()
 ) {
 
     Image(
@@ -118,9 +127,16 @@ fun SearchScreenContent(
                     onDragEnd = {
                         when (direction) {
                             0 -> {
+                                if (!viewModel.uiState.value.candidate?.likeList?.contains(viewModel.uiState.value.currentUser?.id)!!) {
+                                    viewModel.uiState.value.candidate?.likeList?.add(
+                                        viewModel.uiState.value.currentUser?.id ?: "Анлак"
+                                    )
+                                    val listEbanyi = viewModel.uiState.value.candidate?.likeList
+                                    updateLikeList(listEbanyi)
+                                    updateUserInfo()
+                                }
                                 update()
                             }
-
                             1 -> {
                                 update()
                             }
