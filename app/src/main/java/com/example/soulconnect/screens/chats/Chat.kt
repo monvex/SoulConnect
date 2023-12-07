@@ -1,7 +1,5 @@
 package com.example.soulconnect.screens.chats
 
-
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -29,19 +26,17 @@ import com.example.soulconnect.R
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun Chat(chatId: Int? = null, picId: String?, name: String?, text: String){
+fun Chat(chatId: Int? = null, picId: String?, name: String?, text: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp),
         shape = RoundedCornerShape(10.dp),
-        elevation = 5.dp
+        elevation = 5.dp,
     ) {
-        Box(
-        )
-        {
+        Box() {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 GlideImage(
                     model = picId,
@@ -50,17 +45,17 @@ fun Chat(chatId: Int? = null, picId: String?, name: String?, text: String){
                     modifier = Modifier
                         .padding(5.dp)
                         .size(64.dp)
-                        .clip(CircleShape)
+                        .clip(CircleShape),
                 )
                 Column() {
                     Text(
                         text = name ?: "Анлак",
                         fontWeight = FontWeight.Bold,
-                        fontFamily = FontFamily(Font(R.font.relay_comfortaa_regular, weight = FontWeight.W400, style = FontStyle.Normal))
+                        fontFamily = FontFamily(Font(R.font.relay_comfortaa_regular, weight = FontWeight.W400, style = FontStyle.Normal)),
                     )
                     Text(
-                        fontFamily = FontFamily(Font(R.font.relay_comfortaa_regular, weight = FontWeight.W400, style = FontStyle.Normal)) ,
-                        text = text
+                        fontFamily = FontFamily(Font(R.font.relay_comfortaa_regular, weight = FontWeight.W400, style = FontStyle.Normal)),
+                        text = text,
                     )
                 }
             }

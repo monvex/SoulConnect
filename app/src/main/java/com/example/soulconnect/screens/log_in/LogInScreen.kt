@@ -43,9 +43,8 @@ import com.google.relay.compose.tappable
 @Composable
 fun LogInScreen(
     clearAndNavigate: (String) -> Unit,
-    viewModel: LoginViewModel = hiltViewModel()
-)
-{
+    viewModel: LoginViewModel = hiltViewModel(),
+) {
     val uiState by viewModel.uiState
     TopLevel(modifier = Modifier) {
         Background()
@@ -54,41 +53,43 @@ fun LogInScreen(
                 alignment = Alignment.TopCenter,
                 offset = DpOffset(
                     x = -5.142856597900391.dp,
-                    y = 87.0.dp
-                )
-            )
+                    y = 87.0.dp,
+                ),
+            ),
         )
         var loginText by remember { mutableStateOf("") }
         var passwordText by remember { mutableStateOf("") }
-        Column(modifier = Modifier.boxAlign(
-            alignment = Alignment.TopCenter,
-            offset = DpOffset(
-                x = 0.dp,
-                y = 280.dp
-            )
-        )){
+        Column(
+            modifier = Modifier.boxAlign(
+                alignment = Alignment.TopCenter,
+                offset = DpOffset(
+                    x = 0.dp,
+                    y = 280.dp,
+                ),
+            ),
+        ) {
             Text(
                 text = "Логин:",
                 fontFamily = FontFamily(
                     Font(
                         R.font.relay_comfortaa_regular,
                         weight = FontWeight.W400,
-                        style = FontStyle.Normal
-                    )
+                        style = FontStyle.Normal,
+                    ),
                 ),
                 fontSize = 18.sp,
                 color = Color.White,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
             OutlinedTextField(
                 value = uiState.email,
-                onValueChange = {viewModel.onEmailChange(it)},
+                onValueChange = { viewModel.onEmailChange(it) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(0.7f),
                 textStyle = TextStyle(
                     color = Color.White,
                     fontSize = 18.sp,
-                )
+                ),
             )
             Text(
                 text = "Пароль:",
@@ -96,23 +97,23 @@ fun LogInScreen(
                     Font(
                         R.font.relay_comfortaa_regular,
                         weight = FontWeight.W400,
-                        style = FontStyle.Normal
-                    )
+                        style = FontStyle.Normal,
+                    ),
                 ),
                 fontSize = 18.sp,
                 color = Color.White,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
             OutlinedTextField(
                 value = uiState.password,
-                onValueChange = {viewModel.onPasswordChange(it)},
+                onValueChange = { viewModel.onPasswordChange(it) },
                 visualTransformation = PasswordVisualTransformation(),
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(0.7f),
                 textStyle = TextStyle(
                     color = Color.White,
                     fontSize = 18.sp,
-                )
+                ),
             )
         }
         EntryBlock(
@@ -121,14 +122,13 @@ fun LogInScreen(
                 alignment = Alignment.TopCenter,
                 offset = DpOffset(
                     x = -0.5.dp,
-                    y = 470.0.dp
-                    )
-                )
-                .fillMaxWidth(0.5f)
+                    y = 470.0.dp,
+                ),
+            )
+                .fillMaxWidth(0.5f),
         ) { Entry() }
     }
 }
-
 
 @Composable
 fun Background(modifier: Modifier = Modifier) {
@@ -137,7 +137,7 @@ fun Background(modifier: Modifier = Modifier) {
         contentScale = ContentScale.Crop,
         modifier = modifier
             .requiredWidth(1680.0.dp)
-            .requiredHeight(1108.0.dp)
+            .requiredHeight(1108.0.dp),
     )
 }
 
@@ -148,7 +148,7 @@ fun Logo(modifier: Modifier = Modifier) {
         contentScale = ContentScale.Crop,
         modifier = modifier
             .requiredWidth(85.71428680419922.dp)
-            .requiredHeight(120.0.dp)
+            .requiredHeight(120.0.dp),
     )
 }
 
@@ -156,21 +156,21 @@ fun Logo(modifier: Modifier = Modifier) {
 fun EntryBlock(
     onSignUpTapped: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable RelayContainerScope.() -> Unit
+    content: @Composable RelayContainerScope.() -> Unit,
 ) {
     RelayContainer(
         backgroundColor = Color(
             alpha = 255,
             red = 255,
             green = 255,
-            blue = 255
+            blue = 255,
         ),
         arrangement = RelayContainerArrangement.Row,
         padding = PaddingValues(
             start = 19.0.dp,
             top = 9.0.dp,
             end = 19.0.dp,
-            bottom = 9.0.dp
+            bottom = 9.0.dp,
         ),
         itemSpacing = 10.0,
         clipToParent = false,
@@ -183,14 +183,14 @@ fun EntryBlock(
                     alpha = 63,
                     red = 0,
                     green = 0,
-                    blue = 0
+                    blue = 0,
                 ),
                 borderRadius = 100.0.dp,
                 blur = 4.0.dp,
                 offsetX = 0.0.dp,
                 offsetY = 4.0.dp,
-                spread = 0.0.dp
-            )
+                spread = 0.0.dp,
+            ),
     )
 }
 
@@ -204,10 +204,10 @@ fun Entry(modifier: Modifier = Modifier) {
             alpha = 255,
             red = 0,
             green = 0,
-            blue = 0
+            blue = 0,
         ),
         height = 1.1149999618530273.em,
         textAlign = TextAlign.Left,
-        modifier = modifier
+        modifier = modifier,
     )
 }

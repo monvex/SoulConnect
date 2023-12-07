@@ -1,7 +1,6 @@
 package com.example.soulconnect.screens.log_in
 
 import androidx.compose.runtime.mutableStateOf
-import com.example.soulconnect.R.string as AppText
 import com.example.soulconnect.SoulConnectViewModel
 import com.example.soulconnect.common.extensions.isValidEmail
 import com.example.soulconnect.common.snackbar.SnackbarManager
@@ -10,11 +9,12 @@ import com.example.soulconnect.model.service.LogService
 import com.example.soulconnect.navigation.BottomItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import com.example.soulconnect.R.string as AppText
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val accountService: AccountService,
-    logService: LogService
+    logService: LogService,
 ) : SoulConnectViewModel(logService) {
     var uiState = mutableStateOf(LoginUiState())
         private set
@@ -27,6 +27,7 @@ class LoginViewModel @Inject constructor(
     fun onEmailChange(newValue: String) {
         uiState.value = uiState.value.copy(email = newValue)
     }
+
     val currentUser = accountService.hasUser
 
     fun onPasswordChange(newValue: String) {

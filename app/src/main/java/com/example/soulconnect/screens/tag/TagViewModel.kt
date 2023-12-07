@@ -13,17 +13,15 @@ import javax.inject.Inject
 class TagViewModel @Inject constructor(
     private val accountService: AccountService,
     private val storageService: StorageService,
-    logService: LogService
-): SoulConnectViewModel(logService) {
+    logService: LogService,
+) : SoulConnectViewModel(logService) {
     var currentUser = mutableStateOf(User())
-
 
     init {
         launchCatching {
             currentUser.value = storageService.getUser() ?: User()
         }
     }
-
 
     fun updateUserInfo() {
         launchCatching {

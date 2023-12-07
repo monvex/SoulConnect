@@ -1,8 +1,7 @@
 package com.example.soulconnect.model.service.impl
 
-import com.example.soulconnect.model.service.AccountService
 import com.example.soulconnect.model.User
-import com.google.firebase.Firebase
+import com.example.soulconnect.model.service.AccountService
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -29,7 +28,6 @@ class AccountServiceImpl @Inject constructor(private val auth: FirebaseAuth) : A
             auth.addAuthStateListener(listener)
             awaitClose { auth.removeAuthStateListener(listener) }
         }
-
 
     override suspend fun createAnonymousAccount() {
         auth.signInAnonymously().await()

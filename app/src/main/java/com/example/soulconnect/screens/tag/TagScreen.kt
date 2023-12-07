@@ -27,28 +27,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.soulconnect.R
-import com.example.soulconnect.screens.profile.ProfileViewModel
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun TagScreen(
-    viewModel: TagViewModel = hiltViewModel()
-){
+    viewModel: TagViewModel = hiltViewModel(),
+) {
     val user by viewModel.currentUser
     val userTagList = remember { mutableStateOf(mutableListOf<String>()) }
     val tagsList = mapOf<String, List<String>>(
         "Творчество" to listOf<String>("Фотография", "Видеосъемка", "Дизайн", "Макияж", "Рукоделие", "Пение", "Танцы", "Музыка", "Блог", "Рисование"),
-        "Активный образ жизни" to listOf<String>("Бег", "Фитнес", "Велосипед", "Верховная езда", "Лыжи", "Йога", "Пилатес", "Сноуборд", "Ролики", "Скейтборд", "Самокат")
+        "Активный образ жизни" to listOf<String>("Бег", "Фитнес", "Велосипед", "Верховная езда", "Лыжи", "Йога", "Пилатес", "Сноуборд", "Ролики", "Скейтборд", "Самокат"),
     )
     Image(
         painter = painterResource(id = R.drawable.start_page_background),
         contentDescription = "background",
         contentScale = ContentScale.Crop,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     )
-    Column(modifier = Modifier.fillMaxSize())
-    {
-        for ((key, value) in tagsList){
+    Column(modifier = Modifier.fillMaxSize()) {
+        for ((key, value) in tagsList) {
             Box(modifier = Modifier.padding(5.dp)) {
                 Text(
                     text = "$key",
@@ -56,25 +54,28 @@ fun TagScreen(
                         Font(
                             R.font.relay_comfortaa_regular,
                             weight = FontWeight.W400,
-                            style = FontStyle.Normal
-                        )
+                            style = FontStyle.Normal,
+                        ),
                     ),
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp
+                    fontSize = 24.sp,
                 )
             }
             FlowRow(
                 modifier = Modifier
                     .padding(start = 10.dp, end = 10.dp),
-                horizontalArrangement = Arrangement.spacedBy(5.dp)
+                horizontalArrangement = Arrangement.spacedBy(5.dp),
             ) {
                 for (tag in value) {
-                    val selectedTag = remember{mutableStateOf(userTagList.value.contains(tag))}
+                    val selectedTag = remember { mutableStateOf(userTagList.value.contains(tag)) }
                     FilterChip(selected = selectedTag.value, onClick = {
                         selectedTag.value = !selectedTag.value
-                        if (selectedTag.value) userTagList.value.add(tag)
-                        else userTagList.value.remove(tag)
+                        if (selectedTag.value) {
+                            userTagList.value.add(tag)
+                        } else {
+                            userTagList.value.remove(tag)
+                        }
                         viewModel.onTagsChange(userTagList.value)
                         viewModel.updateUserInfo()
                     }) {
@@ -82,7 +83,6 @@ fun TagScreen(
                     }
                 }
             }
-
         }
     }
 }

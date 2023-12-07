@@ -1,8 +1,6 @@
 package com.example.soulconnect.screens.profile
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.soulconnect.R
 import com.example.soulconnect.SoulConnectViewModel
 import com.example.soulconnect.model.User
@@ -12,25 +10,23 @@ import com.example.soulconnect.model.service.StorageService
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
+
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val accountService: AccountService,
     private val storageService: StorageService,
-    logService: LogService
-): SoulConnectViewModel(logService) {
+    logService: LogService,
+) : SoulConnectViewModel(logService) {
     var currentUser = mutableStateOf(User())
 
-    fun getUserInfo(){
+    fun getUserInfo() {
         launchCatching {
             currentUser.value = storageService.getUser() ?: User()
         }
     }
-
 
     fun updateUserInfo() {
         launchCatching {
@@ -45,8 +41,6 @@ class ProfileViewModel @Inject constructor(
     fun onLogout() {
         Firebase.auth.signOut()
     }
-
-
 
     // Список тэгов пользователя
     private val _userTagList = MutableStateFlow(emptyList<String>())
@@ -65,17 +59,16 @@ class ProfileViewModel @Inject constructor(
     var chosenPhoto = _chosenPhoto.asStateFlow()
 
     // Обновление списка тегов пользователя
-    fun updateUserTagList(tags: List<String>) {     // Переписать под получение данных из БД
+    fun updateUserTagList(tags: List<String>) { // Переписать под получение данных из БД
         _userTagList.value = tags
     }
 
-
-    fun updateUserPhotos() {            // Переписать под получение данных из БД
+    fun updateUserPhotos() { // Переписать под получение данных из БД
         _userPhotos.value = listOf(
             R.drawable.test_pic_1,
             R.drawable.test_pic_2,
             R.drawable.test_pic_3,
-            R.drawable.test_pic_4
+            R.drawable.test_pic_4,
         )
     }
 

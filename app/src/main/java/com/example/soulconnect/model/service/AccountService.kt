@@ -1,16 +1,13 @@
 package com.example.soulconnect.model.service
 
 import com.example.soulconnect.model.User
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
-
 
 interface AccountService {
     val currentUserId: String
     val hasUser: Boolean
 
     val currentUser: Flow<User>
-
 
     suspend fun createAnonymousAccount()
     suspend fun authenticate(email: String, password: String)

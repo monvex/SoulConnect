@@ -7,7 +7,6 @@ import com.example.soulconnect.model.service.AccountService
 import com.example.soulconnect.model.service.LogService
 import com.example.soulconnect.model.service.SearchService
 import com.example.soulconnect.model.service.StorageService
-import com.example.soulconnect.screens.log_in.LoginUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -16,7 +15,7 @@ class ChatsViewModel @Inject constructor(
     private val accountService: AccountService,
     private val storageService: StorageService,
     private val searchService: SearchService,
-    logService: LogService
+    logService: LogService,
 ) : SoulConnectViewModel(logService) {
     var uiState = mutableStateOf(ChatsUiState())
         private set
@@ -31,7 +30,7 @@ class ChatsViewModel @Inject constructor(
         }
     }
 
-    fun getInterlocutors(){
+    fun getInterlocutors() {
         launchCatching {
             val user = storageService.getUser()
             val interlocutorsList: MutableList<User?> = mutableListOf()
