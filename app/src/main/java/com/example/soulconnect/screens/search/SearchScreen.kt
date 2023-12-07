@@ -177,7 +177,29 @@ fun SearchScreenContent(
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
                     )
+
                 }
+
+                Box(modifier = Modifier
+                    .padding(start = 320.dp)
+                ) {
+                    Text(
+                        text = "${uiState.candidate?.coefficient}", /* TODO: заменить */
+                        fontFamily = FontFamily(
+                            Font(
+                                R.font.relay_comfortaa_regular,
+                                weight = FontWeight.W400,
+                                style = FontStyle.Normal
+                            )
+                        ),
+                        fontSize = 23.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                }
+
+
 
                 // Пустой контейнер
                 Box(
