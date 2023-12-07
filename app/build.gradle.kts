@@ -101,5 +101,6 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.47")
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
     ksp("com.google.dagger:hilt-compiler:2.47")
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
 }
 

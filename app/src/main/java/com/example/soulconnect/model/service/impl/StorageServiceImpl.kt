@@ -4,16 +4,9 @@ import com.example.soulconnect.model.User
 import com.example.soulconnect.model.service.AccountService
 import com.example.soulconnect.model.service.StorageService
 import com.example.soulconnect.model.service.trace
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.toObject
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.storage
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.emptyFlow
+import com.google.firebase.firestore.toObject
 import kotlinx.coroutines.tasks.await
-import java.util.concurrent.Flow
 import javax.inject.Inject
 
 class StorageServiceImpl @Inject constructor(private val firestore: FirebaseFirestore, private val auth: AccountService) :
