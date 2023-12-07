@@ -23,10 +23,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.soulconnect.R
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun Chat(chatId: Int? = null, picId: Int, name: String, text: String){
+fun Chat(chatId: Int? = null, picId: String?, name: String?, text: String){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,8 +43,8 @@ fun Chat(chatId: Int? = null, picId: Int, name: String, text: String){
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = picId),
+                GlideImage(
+                    model = picId,
                     contentDescription = "interlocutorPhoto",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -51,7 +54,7 @@ fun Chat(chatId: Int? = null, picId: Int, name: String, text: String){
                 )
                 Column() {
                     Text(
-                        text = name,
+                        text = name ?: "Анлак",
                         fontWeight = FontWeight.Bold,
                         fontFamily = FontFamily(Font(R.font.relay_comfortaa_regular, weight = FontWeight.W400, style = FontStyle.Normal))
                     )

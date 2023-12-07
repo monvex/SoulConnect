@@ -14,6 +14,9 @@ class StorageServiceImpl @Inject constructor(private val firestore: FirebaseFire
     override suspend fun getUser(): User? =
         firestore.collection("users").document(auth.currentUserId).get().await().toObject()
 
+    override suspend fun getUserFromId(id: String): User? =
+        firestore.collection("users").document(id).get().await().toObject()
+
     override suspend fun updateUser(user: User): Unit =
         trace("updateUser") {
             firestore.collection("users").document(user.id).set(user).await()
