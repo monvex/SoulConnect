@@ -67,7 +67,7 @@ fun SearchScreen(
             viewModel.updateCandidate()
         },
         updateUserInfo = {
-            viewModel.updateUserInfo(uiState.candidate)
+            viewModel.updateUserInfo(it)
         },
         updateLikeList = {
             viewModel.updateLikeList(it)
@@ -82,7 +82,7 @@ fun SearchScreen(
 fun SearchScreenContent(
     uiState: SearchUiState,
     update: () -> Unit,
-    updateUserInfo: () -> Unit,
+    updateUserInfo: (User?) -> Unit,
     updateLikeList: (MutableList<String>?) -> Unit,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
@@ -127,13 +127,26 @@ fun SearchScreenContent(
                     onDragEnd = {
                         when (direction) {
                             0 -> {
-                                if (!viewModel.uiState.value.candidate?.likeList?.contains(viewModel.uiState.value.currentUser?.id)!!) {
+                                if (viewModel.uiState.value.currentUser?.likeList?.contains(viewModel.uiState.value.candidate?.id)!!){
+                                    viewModel.uiState.value.candidate?.chats?.add(
+                                        viewModel.uiState.value.currentUser?.id ?: "Анлак"
+                                    )
+                                    viewModel.uiState.value.currentUser?.chats?.add(
+                                        viewModel.uiState.value.candidate?.id ?: "Анлак"
+                                    )
+                                    viewModel.uiState.value.currentUser?.likeList?.remove(viewModel.uiState.value.candidate?.id ?: "Анлак")
+                                    val listEbanyi = viewModel.uiState.value.currentUser?.likeList
+                                    updateLikeList(listEbanyi)
+                                    updateUserInfo(viewModel.uiState.value.currentUser)
+                                    updateUserInfo(viewModel.uiState.value.candidate)
+                                }
+                                else if (!viewModel.uiState.value.candidate?.likeList?.contains(viewModel.uiState.value.currentUser?.id)!!) {
                                     viewModel.uiState.value.candidate?.likeList?.add(
                                         viewModel.uiState.value.currentUser?.id ?: "Анлак"
                                     )
                                     val listEbanyi = viewModel.uiState.value.candidate?.likeList
                                     updateLikeList(listEbanyi)
-                                    updateUserInfo()
+                                    updateUserInfo(viewModel.uiState.value.candidate)
                                 }
                                 update()
                             }
