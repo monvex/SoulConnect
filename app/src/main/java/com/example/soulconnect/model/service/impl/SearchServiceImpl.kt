@@ -33,15 +33,23 @@ class SearchServiceImpl @Inject constructor(
 
         for (otherUser in users.filterNotNull()) {
             if (otherUser.name != user.name) {
-                val ageSimilarity =
-                    1 - kotlin.math.abs((user.age.toInt() - otherUser.age.toInt()) / 10.0)
-                val interestsSimilarity =
-                    user.tagList.intersect(otherUser.tagList).size.toDouble() / user.tagList.size
-                val weightAge = 0.3
-                val weightInterests = 0.8
-                val compositeSimilarity =
-                    weightAge * ageSimilarity + weightInterests * interestsSimilarity
+                val compositeSimilarity: Double
+                if(user.chats.contains(otherUser.id))
+                    continue
+                else if(user.likeList.contains(otherUser.id)) {
+                    compositeSimilarity = 10000.0
+                }
+                else {
+                    val ageSimilarity =
+                        1 - kotlin.math.abs((user.age.toInt() - otherUser.age.toInt()) / 10.0)
+                    val interestsSimilarity =
+                        user.tagList.intersect(otherUser.tagList).size.toDouble() / user.tagList.size
+                    val weightAge = 0.3
+                    val weightInterests = 0.8
+                    compositeSimilarity =
+                        weightAge * ageSimilarity + weightInterests * interestsSimilarity
 
+                }
                 weightedSimilarity.add(Pair(otherUser.name, compositeSimilarity))
             }
         }

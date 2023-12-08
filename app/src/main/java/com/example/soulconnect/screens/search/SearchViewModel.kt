@@ -1,6 +1,7 @@
 package com.example.soulconnect.screens.search
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.viewModelScope
 import com.example.soulconnect.SoulConnectViewModel
 import com.example.soulconnect.model.User
 import com.example.soulconnect.model.service.LogService
@@ -50,11 +51,11 @@ class SearchViewModel @Inject constructor(
         launchCatching {
             users = searchService.users
             users.collect {
-                uiState.value = uiState.value.copy(candidate = it[0])
                 uiState.value = uiState.value.copy(candidatesList = searchService.getSortedCandidates(storageService.getUser(), it))
                 uiState.value.candidatesList.forEach {
                     queue.add(it)
                 }
+                uiState.value = uiState.value.copy(candidate = queue.poll())
             }
         }
     }
