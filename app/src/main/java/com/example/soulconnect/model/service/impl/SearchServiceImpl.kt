@@ -54,8 +54,14 @@ class SearchServiceImpl @Inject constructor(
             }
         }
         val sortedSimilarity = weightedSimilarity.sortedByDescending { it.second }
-        val sortedUsers = sortedSimilarity.mapNotNull { (userName, _) ->
-            users.find { it?.name == userName }
+        val sortedUsers = sortedSimilarity.mapNotNull { (userName, compositeSimilarity) ->
+            val foundUser = users.find { it?.name == userName }
+            foundUser?.coefficient = String.format("%.2f", compositeSimilarity).toDouble() // Format to two decimal places
+            foundUser
+        }
+
+        sortedUsers.forEach { user ->
+            println("User: $user, Coefficient: ${user.coefficient}")
         }
 
         return sortedUsers

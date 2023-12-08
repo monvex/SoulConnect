@@ -10,4 +10,5 @@ data class User(
     val avatar: String = "",
     var likeList: MutableList<String> = mutableListOf(),
     val chats: MutableList<String> = mutableListOf(),
+    var coefficient: Double = 0.0,
 )
