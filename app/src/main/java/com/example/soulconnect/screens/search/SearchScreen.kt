@@ -43,216 +43,227 @@ import kotlin.math.abs
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel = hiltViewModel(),
+      viewModel: SearchViewModel = hiltViewModel(),
 ) {
-    val uiState by viewModel.uiState
-    viewModel.updateCurrentUser()
-    SearchScreenContent(
-        uiState,
-        update = {
-            viewModel.updateCandidate()
-        },
-        updateUserInfo = {
-            viewModel.updateUserInfo(it)
-        },
-        updateLikeList = {
-            viewModel.updateLikeList(it)
-        },
-    )
+      val uiState by viewModel.uiState
+      viewModel.updateCurrentUser()
+      SearchScreenContent(
+            uiState,
+            update = {
+                  viewModel.updateCandidate()
+            },
+            updateUserInfo = {
+                  viewModel.updateUserInfo(it)
+            },
+            updateLikeList = {
+                  viewModel.updateLikeList(it)
+            },
+      )
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun SearchScreenContent(
-    uiState: SearchUiState,
-    update: () -> Unit,
-    updateUserInfo: (User?) -> Unit,
-    updateLikeList: (MutableList<String>?) -> Unit,
-    viewModel: SearchViewModel = hiltViewModel(),
+      uiState: SearchUiState,
+      update: () -> Unit,
+      updateUserInfo: (User?) -> Unit,
+      updateLikeList: (MutableList<String>?) -> Unit,
+      viewModel: SearchViewModel = hiltViewModel(),
 ) {
-    Image(
-        painter = painterResource(id = R.drawable.start_page_background),
-        contentDescription = "background",
-        contentScale = ContentScale.Crop,
-        modifier = Modifier.fillMaxSize(),
-    )
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        // Фотка плюс описание поверх фото, потом слайдер добавить
-        var direction by remember { mutableStateOf(-1) }
-        Box(
+      Image(
+            painter = painterResource(id = R.drawable.start_page_background),
+            contentDescription = "background",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize(),
+      )
+      Column(
             modifier = Modifier
-                .clip(RoundedCornerShape(20.dp))
-                .fillMaxHeight(0.8f)
-                .fillMaxWidth(0.95f)
-                .pointerInput(Unit) {
-                    detectDragGestures(
-                        onDrag = { change, dragAmount ->
-                            change.consume()
-                            val (x, y) = dragAmount
-                            if (abs(x) > abs(y)) {
-                                when {
-                                    x > 0 -> {
-                                        // right
-                                        direction = 0
-                                    }
-
-                                    x < 0 -> {
-                                        // left
-                                        direction = 1
-                                    }
-                                }
-                            }
-                        },
-                        onDragEnd = {
-                            when (direction) {
-                                0 -> {
-                                    if (viewModel.uiState.value.currentUser?.likeList?.contains(viewModel.uiState.value.candidate?.id)!!) {
-                                        viewModel.uiState.value.candidate?.chats?.add(
-                                            viewModel.uiState.value.currentUser?.id ?: "Анлак",
-                                        )
-                                        viewModel.uiState.value.currentUser?.chats?.add(
-                                            viewModel.uiState.value.candidate?.id ?: "Анлак",
-                                        )
-                                        viewModel.uiState.value.currentUser?.likeList?.remove(viewModel.uiState.value.candidate?.id ?: "Анлак")
-                                        val listEbanyi = viewModel.uiState.value.currentUser?.likeList
-                                        updateLikeList(listEbanyi)
-                                        updateUserInfo(viewModel.uiState.value.currentUser)
-                                        updateUserInfo(viewModel.uiState.value.candidate)
-                                    } else if (!viewModel.uiState.value.candidate?.likeList?.contains(viewModel.uiState.value.currentUser?.id)!!) {
-                                        viewModel.uiState.value.candidate?.likeList?.add(
-                                            viewModel.uiState.value.currentUser?.id ?: "Анлак",
-                                        )
-                                        val listEbanyi = viewModel.uiState.value.candidate?.likeList
-                                        updateLikeList(listEbanyi)
-                                        updateUserInfo(viewModel.uiState.value.candidate)
-                                    }
-                                    update()
-                                }
-
-                                1 -> {
-                                    update()
-                                }
-                            }
-                        },
-                    )
-                },
-            contentAlignment = Alignment.TopCenter,
-        ) {
-            // Фотография
-            /* TODO: Фотография кандидата */
+                  .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+      ) {
+            // Фотка плюс описание поверх фото, потом слайдер добавить
+            var direction by remember { mutableStateOf(-1) }
             Box(
-                modifier = Modifier
-                    .fillMaxSize(),
+                  modifier = Modifier
+                      .clip(RoundedCornerShape(20.dp))
+                      .fillMaxHeight(0.8f)
+                      .fillMaxWidth(0.95f)
+                      .pointerInput(Unit) {
+                          detectDragGestures(
+                              onDrag = { change, dragAmount ->
+                                  change.consume()
+                                  val (x, y) = dragAmount
+                                  if (abs(x) > abs(y)) {
+                                      when {
+                                          x > 0 -> {
+                                              // right
+                                              direction = 0
+                                          }
+
+                                          x < 0 -> {
+                                              // left
+                                              direction = 1
+                                          }
+                                      }
+                                  }
+                              },
+                              onDragEnd = {
+                                  when (direction) {
+                                      0 -> {
+                                          if (viewModel.uiState.value.currentUser?.likeList?.contains(
+                                                  viewModel.uiState.value.candidate?.id
+                                              )!!
+                                          ) {
+                                              viewModel.uiState.value.candidate?.chats?.add(
+                                                  viewModel.uiState.value.currentUser?.id
+                                                      ?: "Анлак",
+                                              )
+                                              viewModel.uiState.value.currentUser?.chats?.add(
+                                                  viewModel.uiState.value.candidate?.id
+                                                      ?: "Анлак",
+                                              )
+                                              viewModel.uiState.value.currentUser?.likeList?.remove(
+                                                  viewModel.uiState.value.candidate?.id
+                                                      ?: "Анлак"
+                                              )
+                                              val listEbanyi =
+                                                  viewModel.uiState.value.currentUser?.likeList
+                                              updateLikeList(listEbanyi)
+                                              updateUserInfo(viewModel.uiState.value.currentUser)
+                                              updateUserInfo(viewModel.uiState.value.candidate)
+                                          } else if (!viewModel.uiState.value.candidate?.likeList?.contains(
+                                                  viewModel.uiState.value.currentUser?.id
+                                              )!!
+                                          ) {
+                                              viewModel.uiState.value.candidate?.likeList?.add(
+                                                  viewModel.uiState.value.currentUser?.id
+                                                      ?: "Анлак",
+                                              )
+                                              val listEbanyi =
+                                                  viewModel.uiState.value.candidate?.likeList
+                                              updateLikeList(listEbanyi)
+                                              updateUserInfo(viewModel.uiState.value.candidate)
+                                          }
+                                          update()
+                                      }
+
+                                      1 -> {
+                                          update()
+                                      }
+                                  }
+                              },
+                          )
+                      },
+                  contentAlignment = Alignment.TopCenter,
             ) {
-                GlideImage(
-                    model = uiState.candidate?.avatar ?: "Анлак",
-                    contentDescription = "test",
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentScale = ContentScale.FillBounds,
-                )
+                  // Фотография
+                  /* TODO: Фотография кандидата */
+                  Box(
+                        modifier = Modifier
+                              .fillMaxSize(),
+                  ) {
+                        GlideImage(
+                              model = uiState.candidate?.avatar ?: "Анлак",
+                              contentDescription = "test",
+                              modifier = Modifier
+                                    .fillMaxSize(),
+                              contentScale = ContentScale.FillBounds,
+                        )
+                  }
+
+                  Column() {
+                        // Город
+                        Box(
+                              modifier = Modifier
+                                    .padding(start = 20.dp, top = 10.dp),
+                        ) {
+                              Text(
+                                    text = uiState.candidate?.city ?: "Анлак", /* TODO: заменить */
+                                    fontFamily = FontFamily(
+                                          Font(
+                                                R.font.relay_comfortaa_regular,
+                                                weight = FontWeight.W400,
+                                                style = FontStyle.Normal,
+                                          ),
+                                    ),
+                                    fontSize = 18.sp,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                              )
+                        }
+
+                        Box(
+                              modifier = Modifier
+                                    .padding(start = 320.dp),
+                        ) {
+                              Text(
+                                    text = "${uiState.candidate?.coefficient}", /* TODO: заменить */
+                                    fontFamily = FontFamily(
+                                          Font(
+                                                R.font.relay_comfortaa_regular,
+                                                weight = FontWeight.W400,
+                                                style = FontStyle.Normal,
+                                          ),
+                                    ),
+                                    fontSize = 23.sp,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                              )
+                        }
+
+                        // Пустой контейнер
+                        Box(
+                              modifier = Modifier
+                                  .fillMaxWidth()
+                                  .fillMaxHeight(0.7f),
+                        )
+
+                        Box(
+                              modifier = Modifier
+                                  .fillMaxWidth()
+                                  .fillMaxHeight(0.25f)
+                                  .padding(start = 20.dp),
+
+                              ) {
+                              Text(
+                                    text = "${uiState.candidate?.name}, ${uiState.candidate?.age}", /* TODO: заменить */
+                                    fontFamily = FontFamily(
+                                          Font(
+                                                R.font.relay_comfortaa_regular,
+                                                weight = FontWeight.W400,
+                                                style = FontStyle.Normal,
+                                          ),
+                                    ),
+                                    fontSize = 30.sp,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                              )
+                        }
+
+                        Box(
+                              modifier = Modifier
+                                  .fillMaxSize()
+                                  .background(color = Color.Black.copy(alpha = 0.3f))
+                                  .padding(top = 2.dp, start = 10.dp, end = 10.dp)
+                                  .verticalScroll(rememberScrollState()),
+                        ) {
+                              Text(
+                                    text = uiState.candidate?.description ?: "Анлак",
+                                    fontFamily = FontFamily(
+                                          Font(
+                                                R.font.relay_comfortaa_regular,
+                                                weight = FontWeight.W400,
+                                                style = FontStyle.Normal,
+                                          ),
+                                    ),
+                                    fontSize = 18.sp,
+                                    color = Color.White,
+                              )
+                        }
+                        // Нижняя часть фотографии с описанием кандидата(1 фото - текстовое, второе тэги, дальше тэги)
+                        /* TODO: Блок с описанием */
+                  }
             }
-
-            Column() {
-                // Город
-                Box(
-                    modifier = Modifier
-                        .padding(start = 20.dp, top = 10.dp),
-                ) {
-                    Text(
-                        text = uiState.candidate?.city ?: "Анлак", /* TODO: заменить */
-                        fontFamily = FontFamily(
-                            Font(
-                                R.font.relay_comfortaa_regular,
-                                weight = FontWeight.W400,
-                                style = FontStyle.Normal,
-                            ),
-                        ),
-                        fontSize = 18.sp,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                    )
-
-                }
-
-                Box(modifier = Modifier
-                    .padding(start = 320.dp)
-                ) {
-                    Text(
-                        text = "${uiState.candidate?.coefficient}", /* TODO: заменить */
-                        fontFamily = FontFamily(
-                            Font(
-                                R.font.relay_comfortaa_regular,
-                                weight = FontWeight.W400,
-                                style = FontStyle.Normal
-                            )
-                        ),
-                        fontSize = 23.sp,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                }
-
-
-
-                // Пустой контейнер
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.7f),
-                )
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(0.25f)
-                        .padding(start = 20.dp),
-
-                ) {
-                    Text(
-                        text = "${uiState.candidate?.name}, ${uiState.candidate?.age}", /* TODO: заменить */
-                        fontFamily = FontFamily(
-                            Font(
-                                R.font.relay_comfortaa_regular,
-                                weight = FontWeight.W400,
-                                style = FontStyle.Normal,
-                            ),
-                        ),
-                        fontSize = 30.sp,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                    )
-                }
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(color = Color.Black.copy(alpha = 0.3f))
-                        .padding(top = 2.dp, start = 10.dp, end = 10.dp)
-                        .verticalScroll(rememberScrollState()),
-                ) {
-                    Text(
-                        text = uiState.candidate?.description ?: "Анлак",
-                        fontFamily = FontFamily(
-                            Font(
-                                R.font.relay_comfortaa_regular,
-                                weight = FontWeight.W400,
-                                style = FontStyle.Normal,
-                            ),
-                        ),
-                        fontSize = 18.sp,
-                        color = Color.White,
-                    )
-                }
-                // Нижняя часть фотографии с описанием кандидата(1 фото - текстовое, второе тэги, дальше тэги)
-                /* TODO: Блок с описанием */
-            }
-        }
-    }
+      }
 }

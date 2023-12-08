@@ -1,6 +1,5 @@
 package com.example.soulconnect.model
 
-
 data class User(
     val id: String = "",
     val name: String = "",
@@ -11,5 +10,5 @@ data class User(
     val avatar: String = "",
     var likeList: MutableList<String> = mutableListOf(),
     val chats: MutableList<String> = mutableListOf(),
-    var coefficient: Double = 0.0
+    var coefficient: Double = 0.0,
 )
