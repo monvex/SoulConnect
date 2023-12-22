@@ -2,4 +2,9 @@
     <string name="app_name">SoulConnect</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_main_menu">MainMenuActivity</string>
+    <string name="genericError">Что-то пошло не так. Повторите снова</string>
+    <string name="email_error">Пожалуйста введите корректный адрес</string>
+    <string name="recovery_email_sent">Проверьте свой адрес электронной почты.</string>
+    <string name="right">"Свайп вправо</string>
+    <string name="left">"Свайп влево</string>
 </resources>

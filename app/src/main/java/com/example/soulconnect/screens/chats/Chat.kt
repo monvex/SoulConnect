@@ -1,8 +1,5 @@
-package com.example.soulconnect
+package com.example.soulconnect.screens.chats
 
-
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,53 +13,49 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.example.soulconnect.R
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun Chat(chatId: Int? = null, picId: Int, name: String, text: String){
+fun Chat(chatId: Int? = null, picId: String?, name: String?, text: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(5.dp),
         shape = RoundedCornerShape(10.dp),
-        elevation = 5.dp
+        elevation = 5.dp,
     ) {
-        Box(
-        )
-        {
+        Box() {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Image(
-                    painter = painterResource(id = picId),
+                GlideImage(
+                    model = picId,
                     contentDescription = "interlocutorPhoto",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .padding(5.dp)
                         .size(64.dp)
-                        .clip(CircleShape)
+                        .clip(CircleShape),
                 )
                 Column() {
                     Text(
-                        text = name,
+                        text = name ?: "Анлак",
                         fontWeight = FontWeight.Bold,
-                        fontFamily = FontFamily(Font(R.font.relay_comfortaa_regular, weight = FontWeight.W400, style = FontStyle.Normal))
+                        fontFamily = FontFamily(Font(R.font.relay_comfortaa_regular, weight = FontWeight.W400, style = FontStyle.Normal)),
                     )
                     Text(
-                        fontFamily = FontFamily(Font(R.font.relay_comfortaa_regular, weight = FontWeight.W400, style = FontStyle.Normal)) ,
-                        text = text
+                        fontFamily = FontFamily(Font(R.font.relay_comfortaa_regular, weight = FontWeight.W400, style = FontStyle.Normal)),
+                        text = text,
                     )
                 }
             }

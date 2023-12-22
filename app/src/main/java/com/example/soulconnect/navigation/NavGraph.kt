@@ -3,44 +3,71 @@ package com.example.soulconnect.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.soulconnect.ChatsScreen
-import com.example.soulconnect.FullScreenPhoto
-import com.example.soulconnect.GroupChatsScreen
-import com.example.soulconnect.LogInScreen
-import com.example.soulconnect.PhotosScreen
-import com.example.soulconnect.ProfileScreen
-import com.example.soulconnect.SearchScreen
-import com.example.soulconnect.TagScreen
+import com.example.soulconnect.screens.chats.ChatsScreen
+import com.example.soulconnect.screens.photos.FullScreenPhoto
+import com.example.soulconnect.screens.log_in.LogInScreen
+import com.example.soulconnect.screens.photos.PhotosScreen
+import com.example.soulconnect.screens.profile.ProfileScreen
+import com.example.soulconnect.screens.search.SearchScreen
+import com.example.soulconnect.SoulConnectAppState
+import com.example.soulconnect.screens.group_chats.GroupChatsScreen
+import com.example.soulconnect.screens.log_in.LoginViewModel
+import com.example.soulconnect.screens.profile.ProfileItem
+import com.example.soulconnect.screens.profile.ProfileViewModel
+import com.example.soulconnect.screens.search.SearchViewModel
+import com.example.soulconnect.screens.start.StartScreen
+import com.example.soulconnect.screens.tag.TagScreen
 
 @Composable
 fun NavGraph(
-    navHostController: NavHostController
+    appState: SoulConnectAppState,
+    viewModel: LoginViewModel = hiltViewModel(),
+    searchViewModel: SearchViewModel = hiltViewModel()
 ) {
-    NavHost(navController = navHostController, startDestination = BottomItem.Search.route) {
+    NavHost(navController = appState.navController, startDestination = "checkAuth") {
+        composable("startScreen") {
+            StartScreen(
+                onNavigateToLogIn = {
+                    appState.navigate("toLogIn")
+                },
+                onNavigate = {
+                    appState.navigate(BottomItem.Search.route)
+                }
+            )
+        }
+        composable("checkAuth") {
+            if(!viewModel.currentUser) {
+                appState.navigate("startScreen")
+            }
+            else {
+                appState.clearAndNavigate(BottomItem.Search.route)
+            }
+        }
         composable(BottomItem.Search.route) {
-            SearchScreen(navHostController)
+            SearchScreen()
         }
         composable(BottomItem.Chats.route) {
-            ChatsScreen(navHostController)
+            ChatsScreen(onNavigate = {      /* TODO: перенаправление в нужный чат */
+
+            })
         }
         composable(BottomItem.GroupChats.route) {
-            LogInScreen(onNavigate = {})
+            GroupChatsScreen()
         }
-        composable("toLogIn"){
-            LogInScreen(onNavigate = {})
-        }
-        profileGraph(navHostController)
+
+        logInGraph(appState)       // Граф для авторизации
+
+        profileGraph(appState)     // Граф для профиля
     }
 
 }
@@ -56,63 +83,66 @@ inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
     return viewModel(parentEntry)
 }
 
+fun NavGraphBuilder.logInGraph(appState: SoulConnectAppState) {      // Русик, переход со страницы авторизации
+    navigation(
+        startDestination = "logIn",
+        route = "toLogIn"
+    ) {
+        composable("logIn"){
+            LogInScreen(clearAndNavigate = { route -> appState.clearAndNavigate(route)})
+        }
 
-fun NavGraphBuilder.profileGraph(navHostController: NavHostController) {
+    }
+}
+
+fun NavGraphBuilder.profileGraph(appState: SoulConnectAppState) {
     navigation(
         startDestination = BottomItem.Profile.route,
         route = "toProfile"
     ) {
-        composable(BottomItem.Profile.route) {entry ->
-            val viewModel = entry.sharedViewModel<ProfileViewModel>(navHostController)
-            val state by viewModel.userTagList.collectAsStateWithLifecycle()
+        composable(BottomItem.Profile.route) {
             ProfileScreen(
-                navHostController,
                 onNavigateToTagsScreen = {
-                    viewModel.updateUserTagList(
-                        listOf(             //TODO: переписать под получение списка из БД
-                            "Спорт",
-                            "Саморазвитие",
-                            "Фильмы",
-                            "IT",
-                            "Автомобили"
-                        )
-                    )
-                    navHostController.navigate(ProfileItem.Tags.route)
+                    appState.navigateAndPopUp(ProfileItem.Tags.route, "startScreen")
                 },
                 onNavigate = {
-                    viewModel.updateUserPhotos()
-                    navHostController.navigate(ProfileItem.Photos.route)
+                    appState.navigate(ProfileItem.Photos.route)
+                },
+                onStartScreen = {
+                    appState.navigate("startScreen")
                 }
             )
         }
         composable(
             route = ProfileItem.Tags.route
         ){entry ->
-            val viewModel = entry.sharedViewModel<ProfileViewModel>(navHostController)
-            val state by viewModel.userTagList.collectAsStateWithLifecycle()
-            TagScreen(navHostController, state)
+            TagScreen()
         }
         composable(
             route = ProfileItem.Photos.route
         ) { navBackStackEntry ->
-            val viewModel = navBackStackEntry.sharedViewModel<ProfileViewModel>(navHostController)
+            val viewModel = navBackStackEntry.sharedViewModel<ProfileViewModel>(appState.navController)
             val mainImageId by viewModel.userMainProfilePic.collectAsStateWithLifecycle()
             val userPhotos by viewModel.userPhotos.collectAsStateWithLifecycle()
 
-            PhotosScreen(navController = navHostController, mainImageId = mainImageId, onNavigate = {
-
-            },
-                userPhotos = userPhotos)
+            PhotosScreen(
+                mainImageId = mainImageId,
+                onNavigate = { id ->
+                    viewModel.updateChosenPhoto(id)
+                    appState.navigate(ProfileItem.FullScreenPhoto.route)
+                },
+                userPhotos = userPhotos
+            )
         }
         composable(
             route = ProfileItem.FullScreenPhoto.route
         ) { navBackStackEntry ->
-            val viewModel = navBackStackEntry.sharedViewModel<ProfileViewModel>(navHostController)
+            val viewModel = navBackStackEntry.sharedViewModel<ProfileViewModel>(appState.navController)
             val mainImageId by viewModel.userMainProfilePic.collectAsStateWithLifecycle()
             val userPhotos by viewModel.userPhotos.collectAsStateWithLifecycle()
             val chosenPhoto by viewModel.chosenPhoto.collectAsStateWithLifecycle()
 
-            FullScreenPhoto(navController = navHostController, imageId = chosenPhoto, mainImageId = mainImageId, userPhotos = userPhotos)
+            FullScreenPhoto(imageId = chosenPhoto, mainImageId = mainImageId, userPhotos = userPhotos)
         }
     }
 
